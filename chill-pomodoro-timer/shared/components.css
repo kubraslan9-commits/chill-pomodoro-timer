@@ -1,0 +1,717 @@
+/* =============================================================
+   SHARED COMPONENTS
+   =============================================================
+   One CSS class per component in the Figma frame
+   "02 · Components". The popup and the settings page both load
+   this file (after tokens.css and fonts.css).
+
+     Figma component      Class
+     ------------------   ----------------
+     Button               .btn
+     Phase chip           .chip
+     Card                 .card
+     Toggle switch        .toggle
+     Number input         .field
+     Segmented control    .segmented
+     Blocklist row        .blocklist-row
+     Remove domain        .icon-btn
+     (not in Figma yet)   .radio
+
+   States: Figma's "Hover" variant is :hover, "Focus" is
+   :focus-visible (keyboard only), "Disabled" is :disabled.
+
+   Only semantic tokens (--color-…) are used here: no raw colours.
+   ============================================================= */
+
+
+/* ---------- Base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-body-size);
+  line-height: var(--font-body-line-height);
+  font-weight: var(--font-weight-regular);
+  /* DM Sans redraws itself a little for small and large text
+     ("optical size"): big text like the timer gets tighter and
+     finer. Figma does this automatically, and so does Chrome with
+     this setting, so both match. */
+  font-optical-sizing: auto;
+}
+
+/* Buttons and fields don't take the page font on their own. */
+button,
+input,
+output {
+  font: inherit;
+  color: inherit;
+}
+
+p {
+  margin: 0;
+}
+
+/* Lets the `hidden` attribute always win over `display` rules. */
+[hidden] {
+  display: none !important;
+}
+
+/* Invisible on screen, but still read by screen readers. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+
+/* =============================================================
+   BUTTON  (Figma: Button)
+   Variants: --primary, --secondary, --link
+   Extra:    --highlight (the lime button on the popup's timer
+             card: an override in Figma, not a variant yet)
+             --danger (no Figma variant: "Delete" on the settings page)
+   ============================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;                    /* target height from the Figma description */
+  padding: 0 var(--space-16);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-primary);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Keyboard focus: a 2px ring with a 3px gap (Figma "Focus" variant).
+   Teal on white is 9.5:1; WCAG asks for 3:1. */
+.btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.btn--primary {
+  background: var(--color-action-primary);
+  color: var(--color-text-on-action);
+}
+
+.btn--primary:hover {
+  background: var(--color-action-hover);
+}
+
+.btn--secondary {
+  border-color: var(--color-action-primary);
+  background: var(--color-surface-raised);
+}
+
+.btn--secondary:hover {
+  background: var(--color-surface-hover);
+}
+
+/* A link that looks like text. Hover looks the same as default in Figma. */
+.btn--link {
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+
+.btn--highlight {
+  background: var(--color-action-highlight);
+  color: var(--color-action-primary);
+}
+
+.btn--highlight:hover {
+  background: var(--color-action-highlight-hover);
+}
+
+.btn--danger {
+  background: var(--color-error);
+  color: var(--color-text-on-action);
+}
+
+/* Disabled: its own colours, not just faded (Figma "Disabled" variant). */
+.btn:disabled,
+.btn:disabled:hover {
+  border-color: transparent;
+  background: var(--color-disabled-background);
+  color: var(--color-disabled-text);
+  cursor: default;
+}
+
+.btn--secondary:disabled,
+.btn--secondary:disabled:hover {
+  border-color: var(--color-border);
+}
+
+
+/* =============================================================
+   PHASE CHIP  (Figma: Phase chip)
+   A read-only label: a dot and a word. Not a button.
+   Variants: --idle, --focus, --break, --long-break, --paused
+   ============================================================= */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-width: 96px;
+  height: 36px;
+  margin: 0;
+  padding: 0 var(--space-16);
+  border-radius: var(--radius-pill);
+  background: var(--color-phase-idle);
+  color: var(--color-text-primary);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.chip__dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-action-primary);
+}
+
+.chip--idle {
+  background: var(--color-phase-idle);
+}
+
+.chip--focus {
+  background: var(--color-phase-focus);
+}
+
+.chip--break {
+  background: var(--color-phase-break);
+}
+
+.chip--long-break {
+  background: var(--color-phase-long-break);
+}
+
+.chip--paused {
+  background: var(--color-phase-paused);
+}
+
+
+/* =============================================================
+   CARD  (Figma: Card)
+   Variants: --paper (settings), --lime (emphasis), --teal (inverse)
+   ============================================================= */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  border-radius: var(--radius-32);
+}
+
+.card--paper {
+  background: var(--color-surface-raised);
+  color: var(--color-text-primary);
+}
+
+.card--lime {
+  background: var(--color-action-highlight);
+  color: var(--color-text-primary);
+}
+
+.card--teal {
+  background: var(--color-action-primary);
+  color: var(--color-text-on-action);
+}
+
+
+/* =============================================================
+   TOGGLE SWITCH  (Figma: Toggle switch)
+   A real checkbox underneath, drawn as a switch: a 56 × 32 track
+   inside a 64 × 48 click area.
+     ::before = the track        ::after = the knob
+   ============================================================= */
+
+.toggle {
+  appearance: none;
+  position: relative;
+  flex: none;
+  width: 64px;
+  height: 48px;
+  margin: 0;
+  border: none;
+  background: none;
+  outline: none;                   /* the focus ring is drawn on the track, below */
+  cursor: pointer;
+}
+
+.toggle::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  width: 56px;
+  height: 32px;
+  border: 1px solid var(--color-border-control);
+  border-radius: var(--radius-pill);
+  background: var(--color-control-track);
+}
+
+.toggle::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-pill);
+  background: var(--color-control-thumb-off);
+  transition: transform 150ms ease;
+}
+
+.toggle:hover::before {
+  background: var(--color-control-track-hover);
+}
+
+/* On: teal track, white knob moved to the right. */
+.toggle:checked::before {
+  border-color: transparent;
+  background: var(--color-action-primary);
+}
+
+.toggle:checked::after {
+  background: var(--color-surface-raised);
+  transform: translateX(24px);
+}
+
+.toggle:checked:hover::before {
+  background: var(--color-action-hover);
+}
+
+/* Keyboard focus: a pale gap, then a teal ring (Figma "Focus" variant). */
+.toggle:focus-visible::before {
+  box-shadow:
+    0 0 0 3px var(--color-surface),
+    0 0 0 5px var(--color-focus);
+}
+
+.toggle:disabled {
+  cursor: default;
+}
+
+.toggle:disabled::before,
+.toggle:disabled:hover::before {
+  border-color: var(--color-border);
+  background: var(--color-border);
+}
+
+.toggle:disabled::after {
+  background: var(--color-surface-raised);
+}
+
+
+/* =============================================================
+   NUMBER INPUT  (Figma: Number input)
+   Small label on top, a 48px field with the unit inside it, and
+   a helper line underneath. A problem turns the edge red AND
+   replaces the helper with a message (never colour alone).
+     .field           the whole thing
+     .field__label    "Focus length"
+     .field__control  the box that holds the input and its unit
+     .field__input    the input itself (also used for the
+                      website-address field)
+     .field__unit     "min"
+     .field__helper   "5–90 minutes"
+     .field__error    "Enter a whole number from 5 to 90."
+   ============================================================= */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  width: 144px;
+}
+
+.field__label {
+  margin-bottom: 10px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
+}
+
+.field__control {
+  position: relative;
+}
+
+.field__input {
+  display: block;
+  width: 100%;
+  height: 48px;
+  padding: 0 var(--space-16);
+  border: 1px solid var(--color-border-control);
+  border-radius: var(--radius-12);
+  background: var(--color-surface-raised);
+  color: var(--color-text-primary);
+  font-size: var(--font-body-large-size);
+  font-weight: var(--font-weight-medium);
+  outline: 2px solid transparent;  /* invisible, but shows up in Windows high-contrast mode */
+  outline-offset: 3px;
+}
+
+/* Leave room on the right for the unit ("min", "rounds"). */
+.field__control .field__input {
+  padding-right: 64px;
+}
+
+/* Hide the tiny up/down arrows: the unit sits where they would be.
+   The arrow keys on the keyboard still change the number. */
+.field__input[type="number"] {
+  appearance: textfield;
+}
+
+.field__input[type="number"]::-webkit-inner-spin-button,
+.field__input[type="number"]::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.field__input::placeholder {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-regular);
+}
+
+.field__input:hover {
+  border-color: var(--color-action-primary);
+}
+
+.field__input:focus-visible {
+  box-shadow:
+    0 0 0 3px var(--color-surface),
+    0 0 0 5px var(--color-focus);
+}
+
+.field__input[aria-invalid="true"] {
+  border-color: var(--color-error);
+}
+
+.field__input:disabled {
+  border-color: var(--color-border);
+  background: var(--color-disabled-background);
+  color: var(--color-disabled-text);
+}
+
+.field__unit {
+  position: absolute;
+  right: var(--space-16);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-secondary);
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
+  pointer-events: none;            /* clicking the unit puts the cursor in the field */
+}
+
+.field__helper,
+.field__error {
+  margin-top: var(--space-12);
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
+}
+
+.field__helper {
+  color: var(--color-text-secondary);
+}
+
+.field__error {
+  color: var(--color-error);
+}
+
+/* While an error is showing, it takes the helper's place. */
+.field:has(.field__error:not([hidden])) .field__helper {
+  display: none;
+}
+
+
+/* =============================================================
+   SEGMENTED CONTROL  (Figma: Segmented control)
+   "One choice at a time". Real radio buttons underneath, so the
+   arrow keys and screen readers work as usual.
+     .segmented          the pale pill that holds the options
+     .segmented__option  one option (a <label> around a radio)
+   ============================================================= */
+
+.segmented {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;          /* equal-width options */
+  width: 100%;
+  max-width: 480px;
+  height: 44px;
+  padding: var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-control-track);
+}
+
+/* Two options instead of three. */
+.segmented--two {
+  max-width: 320px;
+}
+
+.segmented__option {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Makes the click area the full 44px height of the control. */
+.segmented__option::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--space-4)) 0;
+}
+
+/* The radio itself is invisible but still takes keyboard focus. */
+.segmented__option input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.segmented__option span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-primary);
+  font-size: var(--font-body-size);
+  line-height: var(--font-body-line-height);
+  white-space: nowrap;
+}
+
+/* The chosen option: lime, bolder, and a thin teal outline. The
+   outline is not in Figma: lime and the pale track are equally
+   light, so without it the choice is shown by hue alone. */
+.segmented__option input:checked + span {
+  background: var(--color-action-highlight);
+  font-weight: var(--font-weight-medium);
+  outline: 1px solid var(--color-action-primary);
+  outline-offset: -1px;
+}
+
+.segmented__option:hover input:checked + span {
+  background: var(--color-action-highlight-hover);
+}
+
+/* Keyboard focus: a ring around the whole control (Figma "Focus" variant). */
+.segmented:has(input:focus-visible) {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.segmented:has(input:disabled) {
+  background: var(--color-disabled-background);
+}
+
+.segmented__option input:disabled + span {
+  color: var(--color-disabled-text);
+}
+
+.segmented__option input:disabled:checked + span {
+  background: var(--color-border);
+  outline: none;
+}
+
+
+/* =============================================================
+   BLOCKLIST ROW  (Figma: Blocklist row)  +
+   REMOVE DOMAIN  (Figma: Remove domain)  ->  .icon-btn
+   ============================================================= */
+
+.blocklist-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+  min-height: 48px;
+  padding-left: var(--space-16);
+  border: 1px solid var(--color-border-control);
+  border-radius: var(--radius-12);
+  background: var(--color-surface-raised);
+}
+
+.blocklist-row:hover {
+  background: var(--color-surface-hover);
+}
+
+.blocklist-row__domain {
+  min-width: 0;
+  overflow-wrap: anywhere;         /* very long addresses wrap instead of pushing the × out */
+  font-size: var(--font-body-size);
+  line-height: var(--font-body-line-height);
+}
+
+/* A round 48px button holding one symbol (the "×"). It always
+   needs an aria-label that says what it does. */
+.icon-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin: -1px -1px -1px 0;        /* sits flush with the row's edge */
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 24px;
+  font-weight: var(--font-weight-regular);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  background: var(--color-surface-hover);
+}
+
+.icon-btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.icon-btn:disabled {
+  color: var(--color-disabled-text);
+  cursor: default;
+}
+
+
+/* ---------- Radio button (NOT IN FIGMA YET) ----------
+   The Figma design system has no radio component yet (checked
+   2026-11-17), so this one is built from the existing tokens to
+   match the toggle and the segmented control: the same control
+   border (3:1), the teal of the chosen state, and the same focus
+   ring as the toggle. The real <input type="radio"> stays in the
+   page (drawn by CSS with appearance: none), so the browser keeps
+   doing the keyboard part: Tab into the group, arrows to move.
+
+   <div class="radio-list">
+     <label class="radio">
+       <input class="radio__input" type="radio" name="…" value="…">
+       <span class="radio__label">Party hat</span>
+     </label>
+   </div> */
+
+.radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: 40px;                 /* a comfortable click and touch target */
+  padding: 0 var(--space-12) 0 var(--space-8);
+  align-self: flex-start;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-primary);
+  font-size: var(--font-body-size);
+  line-height: var(--font-body-line-height);
+  cursor: pointer;
+}
+
+.radio:hover {
+  background: var(--color-surface-hover);
+}
+
+/* The circle. */
+.radio__input {
+  appearance: none;
+  flex: none;
+  display: grid;
+  place-content: center;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border: 2px solid var(--color-border-control);
+  border-radius: 50%;
+  background: var(--color-surface-raised);
+  cursor: pointer;
+}
+
+/* The dot inside the chosen circle. */
+.radio__input::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-action-primary);
+  transform: scale(0);
+  transition: transform 120ms ease-out;
+}
+
+.radio__input:checked {
+  border-color: var(--color-action-primary);
+}
+
+.radio__input:checked::before {
+  transform: scale(1);
+}
+
+.radio__input:checked + .radio__label {
+  font-weight: var(--font-weight-medium);
+}
+
+/* Keyboard focus: the same ring as the toggle. */
+.radio__input:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px var(--color-surface),
+    0 0 0 5px var(--color-focus);
+}
+
+.radio__input:disabled,
+.radio__input:disabled + .radio__label {
+  color: var(--color-disabled-text);
+  cursor: default;
+}
+
+
+/* ---------- Reduced motion ----------
+   The only moving part here is the toggle's knob. It jumps
+   instead of sliding when the system asks for less motion, or
+   when "Reduced motion: Always on" is chosen (the settings page
+   then puts this class on its body). */
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle::after,
+  .radio__input::before {
+    transition: none;
+  }
+}
+
+.reduced-motion .toggle::after,
+.reduced-motion .radio__input::before {
+  transition: none;
+}

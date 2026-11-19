@@ -1,0 +1,712 @@
+{
+ "note": "Positions are in the 1440 x 900 Figma frame, listed back to front. One entry per Figma layer. 'box' is the layer's own box in Figma (what its motion turns around); 'image' is where its SVG file sits. Motion is in content/meadow-motion.css, matched by 'slug'. Flower and grass groups ('inline': true) are placed in the page as SVG, one <g data-flower> per Figma flower, so each flower can react to the cursor on its own. Each cat body also lists its 'accessories' (party hat, bow tie; drawn in code, NOT from Figma), placed inside the body layer so they move with the cat; 'pivot' is the brim centre or the knot.",
+ "frame": {
+  "width": 1440,
+  "height": 900
+ },
+ "base": {
+  "1x": "base.webp",
+  "2x": "base@2x.webp"
+ },
+ "grain": {
+  "file": "grain.webp",
+  "tileCssPx": 128
+ },
+ "layers": [
+  {
+   "name": "Flowers west \u00b7 poppies",
+   "slug": "flowers-west-poppies",
+   "figmaId": "9:826",
+   "box": {
+    "x": -22.87060546875,
+    "y": 218.872314453125,
+    "width": 322.306884765625,
+    "height": 207.3026123046875
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/flowers-west-poppies.svg",
+    "x": -23,
+    "y": 218,
+    "width": 325,
+    "height": 210,
+    "inline": true,
+    "flowers": 20
+   }
+  },
+  {
+   "name": "Flowers west \u00b7 poppies",
+   "slug": "flowers-west-poppies-2",
+   "figmaId": "20:10083",
+   "box": {
+    "x": -166,
+    "y": 618,
+    "width": 337.140869140625,
+    "height": 249.30264282226562
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/flowers-west-poppies-2.svg",
+    "x": -166,
+    "y": 617,
+    "width": 339,
+    "height": 251,
+    "inline": true,
+    "flowers": 12
+   }
+  },
+  {
+   "name": "Flowers north \u00b7 bells",
+   "slug": "flowers-north-bells",
+   "figmaId": "9:1067",
+   "box": {
+    "x": 217.42041015625,
+    "y": 97,
+    "width": 660.3190307617188,
+    "height": 246.66021728515625
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/flowers-north-bells.svg",
+    "x": 216,
+    "y": 95,
+    "width": 664,
+    "height": 251,
+    "inline": true,
+    "flowers": 33
+   }
+  },
+  {
+   "name": "Flowers east \u00b7 daisies",
+   "slug": "flowers-east-daisies",
+   "figmaId": "9:1229",
+   "box": {
+    "x": 1135.9654541015625,
+    "y": 227.47515869140625,
+    "width": 258.49517822265625,
+    "height": 283.0812683105469
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/flowers-east-daisies.svg",
+    "x": 1135,
+    "y": 226,
+    "width": 262,
+    "height": 287,
+    "inline": true,
+    "flowers": 23
+   }
+  },
+  {
+   "name": "Flowers southwest \u00b7 cosmos",
+   "slug": "flowers-southwest-cosmos",
+   "figmaId": "9:1470",
+   "box": {
+    "x": -39.13916015625,
+    "y": 475.6474609375,
+    "width": 371.6937255859375,
+    "height": 169.94790649414062
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/flowers-southwest-cosmos.svg",
+    "x": -40,
+    "y": 474,
+    "width": 375,
+    "height": 174,
+    "inline": true,
+    "flowers": 17
+   }
+  },
+  {
+   "name": "Flowers foreground \u00b7 roses",
+   "slug": "flowers-foreground-roses",
+   "figmaId": "9:1663",
+   "box": {
+    "x": 264.41290283203125,
+    "y": 608.7154541015625,
+    "width": 463.2486267089844,
+    "height": 229.8382110595703
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/flowers-foreground-roses.svg",
+    "x": 264,
+    "y": 608,
+    "width": 466,
+    "height": 233,
+    "inline": true,
+    "flowers": 24
+   }
+  },
+  {
+   "name": "Flowers foreground \u00b7 poppies",
+   "slug": "flowers-foreground-poppies",
+   "figmaId": "9:1904",
+   "box": {
+    "x": 685.180419921875,
+    "y": 627.5985107421875,
+    "width": 378.39404296875,
+    "height": 223.12416076660156
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/flowers-foreground-poppies.svg",
+    "x": 685,
+    "y": 627,
+    "width": 381,
+    "height": 226,
+    "inline": true,
+    "flowers": 17
+   }
+  },
+  {
+   "name": "Flowers southeast \u00b7 wildflowers",
+   "slug": "flowers-southeast-wildflowers",
+   "figmaId": "9:2125",
+   "box": {
+    "x": 1107.1444091796875,
+    "y": 689.4537963867188,
+    "width": 387.1910400390625,
+    "height": 214.3704376220703
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/flowers-southeast-wildflowers.svg",
+    "x": 1106,
+    "y": 688,
+    "width": 389,
+    "height": 218,
+    "inline": true,
+    "flowers": 42
+   }
+  },
+  {
+   "name": "Flowers east \u00b7 tall tulips",
+   "slug": "flowers-east-tall-tulips",
+   "figmaId": "9:2366",
+   "box": {
+    "x": 1274.509521484375,
+    "y": 489.37005615234375,
+    "width": 158.2454376220703,
+    "height": 140.07273864746094
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/flowers-east-tall-tulips.svg",
+    "x": 1272,
+    "y": 487,
+    "width": 163,
+    "height": 144,
+    "inline": true,
+    "flowers": 5
+   }
+  },
+  {
+   "name": "Foreground grasses",
+   "slug": "foreground-grasses",
+   "figmaId": "9:2394",
+   "box": {
+    "x": -0.986900806427002,
+    "y": 883.9761962890625,
+    "width": 1329.86962890625,
+    "height": 42.640403747558594
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/foreground-grasses.svg",
+    "x": -1,
+    "y": 883,
+    "width": 1330,
+    "height": 44,
+    "inline": true,
+    "flowers": 10
+   }
+  },
+  {
+   "name": "Ginger contact wash",
+   "slug": "ginger-contact-wash",
+   "kind": "static",
+   "image": {
+    "file": "layers/ginger-contact-wash.svg",
+    "x": 707,
+    "y": 529,
+    "width": 72,
+    "height": 18
+   }
+  },
+  {
+   "name": "Ginger cat tail",
+   "slug": "ginger-cat-tail",
+   "figmaId": "9:2636",
+   "box": {
+    "x": 687.3699951171875,
+    "y": 523.2259521484375,
+    "width": 34.317161560058594,
+    "height": 57.175628662109375
+   },
+   "kind": "cat",
+   "image": {
+    "file": "layers/ginger-cat-tail.svg",
+    "x": 686,
+    "y": 521,
+    "width": 38,
+    "height": 61
+   }
+  },
+  {
+   "name": "Ginger cat body",
+   "slug": "ginger-cat-body",
+   "figmaId": "9:2638",
+   "box": {
+    "x": 706.7854614257812,
+    "y": 411.4761657714844,
+    "width": 79.40248107910156,
+    "height": 125.46381378173828
+   },
+   "kind": "cat",
+   "image": {
+    "file": "layers/ginger-cat-body.svg",
+    "x": 704,
+    "y": 410,
+    "width": 84,
+    "height": 129
+   },
+   "accessories": {
+    "party-hat": {
+     "file": "accessories/ginger-party-hat.svg",
+     "x": 752.0,
+     "y": 403.0,
+     "width": 27.0,
+     "height": 38.0,
+     "pivot": {
+      "x": 761.3,
+      "y": 419.3
+     }
+    },
+    "bow-tie": {
+     "file": "accessories/ginger-bow-tie.svg",
+     "x": 762.0,
+     "y": 440.0,
+     "width": 19.0,
+     "height": 15.0,
+     "pivot": {
+      "x": 771.5,
+      "y": 447
+     }
+    }
+   }
+  },
+  {
+   "name": "Dark cat contact wash",
+   "slug": "dark-cat-contact-wash",
+   "kind": "static",
+   "image": {
+    "file": "layers/dark-cat-contact-wash.svg",
+    "x": 956,
+    "y": 508,
+    "width": 65,
+    "height": 18
+   }
+  },
+  {
+   "name": "Navy cat tail",
+   "slug": "navy-cat-tail",
+   "figmaId": "9:2647",
+   "box": {
+    "x": 1023.9000244140625,
+    "y": 497.20001220703125,
+    "width": 22.6200008392334,
+    "height": 56.3129997253418
+   },
+   "kind": "cat",
+   "image": {
+    "file": "layers/navy-cat-tail.svg",
+    "x": 1022,
+    "y": 496,
+    "width": 26,
+    "height": 60
+   }
+  },
+  {
+   "name": "Navy cat body",
+   "slug": "navy-cat-body",
+   "figmaId": "9:2649",
+   "box": {
+    "x": 955.2598876953125,
+    "y": 396.45782470703125,
+    "width": 72.36031341552734,
+    "height": 118.68215942382812
+   },
+   "kind": "cat",
+   "image": {
+    "file": "layers/navy-cat-body.svg",
+    "x": 954,
+    "y": 394,
+    "width": 77,
+    "height": 123
+   },
+   "accessories": {
+    "party-hat": {
+     "file": "accessories/navy-party-hat.svg",
+     "x": 961.0,
+     "y": 386.0,
+     "width": 27.0,
+     "height": 41.0,
+     "pivot": {
+      "x": 981.5,
+      "y": 402.6
+     }
+    },
+    "bow-tie": {
+     "file": "accessories/navy-bow-tie.svg",
+     "x": 958.0,
+     "y": 425.0,
+     "width": 18.0,
+     "height": 15.0,
+     "pivot": {
+      "x": 966.5,
+      "y": 432
+     }
+    }
+   }
+  },
+  {
+   "name": "Bird ivory",
+   "slug": "bird-ivory",
+   "figmaId": "9:2657",
+   "box": {
+    "x": 558,
+    "y": 234,
+    "width": 48.000099182128906,
+    "height": 36
+   },
+   "kind": "bird",
+   "wings": {
+    "name": "Bird ivory wings",
+    "slug": "bird-ivory-wings",
+    "figmaId": "9:2658",
+    "box": {
+     "x": 558,
+     "y": 234,
+     "width": 43.19999694824219,
+     "height": 24.104612350463867
+    },
+    "image": {
+     "file": "layers/bird-ivory-wings.svg",
+     "x": 557,
+     "y": 233,
+     "width": 46,
+     "height": 27
+    }
+   },
+   "image": {
+    "file": "layers/bird-ivory.svg",
+    "x": 558,
+    "y": 234,
+    "width": 49,
+    "height": 37
+   }
+  },
+  {
+   "name": "Bird blue",
+   "slug": "bird-blue",
+   "figmaId": "9:2664",
+   "box": {
+    "x": 1029.0401611328125,
+    "y": 367.0400390625,
+    "width": 51.5997314453125,
+    "height": 38.69994354248047
+   },
+   "kind": "bird",
+   "wings": {
+    "name": "Bird blue wings",
+    "slug": "bird-blue-wings",
+    "figmaId": "9:2665",
+    "box": {
+     "x": 1029.0401611328125,
+     "y": 367.0400390625,
+     "width": 46.440040588378906,
+     "height": 25.9124813079834
+    },
+    "image": {
+     "file": "layers/bird-blue-wings.svg",
+     "x": 1028,
+     "y": 366,
+     "width": 49,
+     "height": 29
+    }
+   },
+   "image": {
+    "file": "layers/bird-blue.svg",
+    "x": 1029,
+    "y": 367,
+    "width": 53,
+    "height": 40
+   }
+  },
+  {
+   "name": "Bird butter",
+   "slug": "bird-butter",
+   "figmaId": "9:2671",
+   "box": {
+    "x": 835.0799560546875,
+    "y": 344.0799560546875,
+    "width": 43.1999397277832,
+    "height": 32.40003204345703
+   },
+   "kind": "bird",
+   "wings": {
+    "name": "Bird butter wings",
+    "slug": "bird-butter-wings",
+    "figmaId": "9:2672",
+    "box": {
+     "x": 835.0799560546875,
+     "y": 344.0799560546875,
+     "width": 38.87998962402344,
+     "height": 21.69414710998535
+    },
+    "image": {
+     "file": "layers/bird-butter-wings.svg",
+     "x": 834,
+     "y": 343,
+     "width": 41,
+     "height": 25
+    }
+   },
+   "image": {
+    "file": "layers/bird-butter.svg",
+    "x": 835,
+    "y": 344,
+    "width": 45,
+    "height": 34
+   }
+  },
+  {
+   "name": "Bird pale",
+   "slug": "bird-pale",
+   "figmaId": "9:2678",
+   "box": {
+    "x": 645.5198364257812,
+    "y": 390.5199890136719,
+    "width": 40.80035400390625,
+    "height": 30.600032806396484
+   },
+   "kind": "bird",
+   "wings": {
+    "name": "Bird pale wings",
+    "slug": "bird-pale-wings",
+    "figmaId": "9:2679",
+    "box": {
+     "x": 645.5198364257812,
+     "y": 390.5199890136719,
+     "width": 36.72002029418945,
+     "height": 20.488933563232422
+    },
+    "image": {
+     "file": "layers/bird-pale-wings.svg",
+     "x": 644,
+     "y": 389,
+     "width": 40,
+     "height": 24
+    }
+   },
+   "image": {
+    "file": "layers/bird-pale.svg",
+    "x": 645,
+    "y": 390,
+    "width": 43,
+    "height": 33
+   }
+  },
+  {
+   "name": "Meadow flowers \u00b7 middle left",
+   "slug": "meadow-flowers-middle-left",
+   "figmaId": "11:5503",
+   "box": {
+    "x": 330.68896484375,
+    "y": 382.7301025390625,
+    "width": 260.78466796875,
+    "height": 221.15472412109375
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/meadow-flowers-middle-left.svg",
+    "x": 330,
+    "y": 381,
+    "width": 264,
+    "height": 225,
+    "inline": true,
+    "flowers": 54
+   }
+  },
+  {
+   "name": "Meadow flowers \u00b7 far drift",
+   "slug": "meadow-flowers-far-drift",
+   "figmaId": "11:6229",
+   "box": {
+    "x": 599.2373046875,
+    "y": 258.2791748046875,
+    "width": 451.8612060546875,
+    "height": 83.52020263671875
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/meadow-flowers-far-drift.svg",
+    "x": 598,
+    "y": 257,
+    "width": 455,
+    "height": 87,
+    "inline": true,
+    "flowers": 42
+   }
+  },
+  {
+   "name": "Meadow flowers \u00b7 lower centre",
+   "slug": "meadow-flowers-lower-centre",
+   "figmaId": "11:7316",
+   "box": {
+    "x": 579.73095703125,
+    "y": 560.5692138671875,
+    "width": 538.2907104492188,
+    "height": 129.48348999023438
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/meadow-flowers-lower-centre.svg",
+    "x": 578,
+    "y": 558,
+    "width": 543,
+    "height": 135,
+    "inline": true,
+    "flowers": 58
+   }
+  },
+  {
+   "name": "Meadow flowers \u00b7 low clover",
+   "slug": "meadow-flowers-low-clover",
+   "figmaId": "11:8390",
+   "box": {
+    "x": 347.0966796875,
+    "y": 411.5023193359375,
+    "width": 757.246337890625,
+    "height": 254.48849487304688
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/meadow-flowers-low-clover.svg",
+    "x": 346,
+    "y": 410,
+    "width": 760,
+    "height": 257,
+    "inline": true,
+    "flowers": 60
+   }
+  },
+  {
+   "name": "Low blooms \u00b7 upper clearing",
+   "slug": "low-blooms-upper-clearing",
+   "figmaId": "11:9143",
+   "box": {
+    "x": 636.88623046875,
+    "y": 86.55029296875,
+    "width": 413.3509216308594,
+    "height": 197.6457061767578
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/low-blooms-upper-clearing.svg",
+    "x": 636,
+    "y": 85,
+    "width": 416,
+    "height": 201,
+    "inline": true,
+    "flowers": 36
+   }
+  },
+  {
+   "name": "Low blooms \u00b7 left clearing",
+   "slug": "low-blooms-left-clearing",
+   "figmaId": "11:10697",
+   "box": {
+    "x": 170.99560546875,
+    "y": 308.8948974609375,
+    "width": 482.672119140625,
+    "height": 436.9687805175781
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/low-blooms-left-clearing.svg",
+    "x": 169,
+    "y": 307,
+    "width": 488,
+    "height": 442,
+    "inline": true,
+    "flowers": 56
+   }
+  },
+  {
+   "name": "Low blooms \u00b7 central meadow",
+   "slug": "low-blooms-central-meadow",
+   "figmaId": "11:18620",
+   "box": {
+    "x": 473.3017578125,
+    "y": 326.08258056640625,
+    "width": 676.297607421875,
+    "height": 433.4833068847656
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/low-blooms-central-meadow.svg",
+    "x": 473,
+    "y": 324,
+    "width": 680,
+    "height": 439,
+    "inline": true,
+    "flowers": 80
+   }
+  },
+  {
+   "name": "Low blooms \u00b7 foreground clearing",
+   "slug": "low-blooms-foreground-clearing",
+   "figmaId": "11:23239",
+   "box": {
+    "x": 162.4814453125,
+    "y": 684.8306274414062,
+    "width": 981.72607421875,
+    "height": 196.48402404785156
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/low-blooms-foreground-clearing.svg",
+    "x": 160,
+    "y": 683,
+    "width": 988,
+    "height": 202,
+    "inline": true,
+    "flowers": 64
+   }
+  },
+  {
+   "name": "Low blooms \u00b7 right clearing",
+   "slug": "low-blooms-right-clearing",
+   "figmaId": "11:24421",
+   "box": {
+    "x": 1128.2998046875,
+    "y": 356.700927734375,
+    "width": 305.1454162597656,
+    "height": 420.06011962890625
+   },
+   "kind": "plant",
+   "image": {
+    "file": "layers/low-blooms-right-clearing.svg",
+    "x": 1128,
+    "y": 354,
+    "width": 309,
+    "height": 426,
+    "inline": true,
+    "flowers": 42
+   }
+  }
+ ]
+}

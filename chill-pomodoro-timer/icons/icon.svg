@@ -1,0 +1,24 @@
+<!-- Chill Pomodoro Timer app icon (original drawing, 2026-11-17).
+     Dark green alarm clock (colour token color-action-primary, #234d43) on an
+     off-white circle (color-surface, #f8f9f2), so it reads on light
+     and dark toolbars. The light gaps and hands are the same off-white.
+     icon-small.svg is the same clock with bolder gaps and hands for
+     the 16 and 32 px sizes. The PNGs in this folder are made from
+     these two files. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <circle cx="64" cy="64" r="63" fill="#f8f9f2"/>
+  <g fill="#234d43" stroke="#234d43" stroke-linecap="round">
+    <!-- bells -->
+    <circle cx="36" cy="36" r="15" stroke="none"/>
+    <circle cx="92" cy="36" r="15" stroke="none"/>
+    <!-- feet -->
+    <line x1="45" y1="92" x2="34" y2="104" stroke-width="7"/>
+    <line x1="83" y1="92" x2="94" y2="104" stroke-width="7"/>
+  </g>
+  <!-- the light gap around the face, which shapes the bells -->
+  <circle cx="64" cy="66" r="40" fill="#f8f9f2"/>
+  <!-- face -->
+  <circle cx="64" cy="66" r="34" fill="#234d43"/>
+  <!-- hands at about four o'clock -->
+  <path d="M64 45 V66 L80 75" fill="none" stroke="#f8f9f2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

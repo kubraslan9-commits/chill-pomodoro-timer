@@ -1,0 +1,39 @@
+/* =============================================================
+   CAT COLOURS  (customizable cats, 2026-11-17; NOT IN FIGMA)
+   =============================================================
+   Paints the cat SVGs (assets/meadow/layers/*-cat-*.svg) in the
+   coat chosen on the options page. Each painted part of a cat has
+   a class; the colours themselves are custom properties set on the
+   cat's box by applyCatCoat() in shared/cat-coats.js, the one
+   place where the coats are defined.
+
+   Only inside an element with data-coat, so a cat file opened on
+   its own still shows its Figma colours (its fill attributes).
+   Used by content.css (break screen) and the options page preview.
+   ============================================================= */
+
+[data-coat] .cat-fur     { fill: var(--cat-fur); }
+[data-coat] .cat-shade   { fill: var(--cat-shade); }
+[data-coat] .cat-ear     { fill: var(--cat-ear); }
+[data-coat] .cat-nose    { fill: var(--cat-nose); }
+[data-coat] .cat-patch-a { fill: var(--cat-patch-a); }
+[data-coat] .cat-patch-b { fill: var(--cat-patch-b); }
+
+[data-coat] .cat-shade-line { stroke: var(--cat-shade); }
+[data-coat] .cat-eye        { stroke: var(--cat-eye); }
+[data-coat] .cat-whisker    { stroke: var(--cat-whisker); }
+[data-coat] .cat-stripe     { stroke: var(--cat-stripe); }
+
+/* Calico patches and tabby stripes: hidden in the files, shown
+   only for the coat that has them (data-marks, from applyCatCoat). */
+[data-marks="calico"] [data-marks="calico"],
+[data-marks="tabby"] [data-marks="tabby"] {
+  display: inline;
+}
+
+/* Party hat and bow tie: one colour set per coat (CAT_COATS
+   accessory), instead of fixed colours per cat. */
+[data-coat] [data-paint="main"] { fill: var(--cat-accessory); stroke: var(--cat-accessory); }
+[data-coat] [data-paint="dots"] { fill: var(--cat-accessory-dots); }
+[data-coat] [data-paint="knot"] { fill: var(--cat-accessory-knot); }
+[data-coat] [data-paint="trim"] { stroke: var(--cat-accessory-knot); }

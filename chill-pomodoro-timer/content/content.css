@@ -1,0 +1,640 @@
+/* Styles for the two things we draw on web pages:
+   the progress bar (F3) and the meadow break screen (F5, F6, F7).
+
+   These styles live inside a "Shadow DOM", a sealed box that the
+   page's own styles can't get into, and ours can't leak out of. */
+
+/* The design tokens (colours, spacing, text sizes) and the shared
+   components (.btn, .chip), loaded into the sealed box too. These
+   lines have to stay first in the file. (.visually-hidden and
+   [hidden] come from components.css as well.) */
+@import url("../shared/tokens.css");
+@import url("../shared/components.css");
+@import url("meadow-motion.css");   /* the meadow's Figma keyframes */
+@import url("meadow-accessories.css"); /* cat hat / bow tie wobble (not from Figma) */
+@import url("../shared/cat-art.css");   /* cat coat colours (not from Figma) */
+
+.wrapper {
+  font-family: ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+}
+
+/* Makes the `hidden` attribute always win, even over `display` below. */
+[hidden] {
+  display: none !important;
+}
+
+
+/* ---------- The progress bar (focus mode) ---------- */
+/* Figma: "Progress bar" (Running / Paused, and Hover = the tooltip).
+   Only semantic tokens here, no raw colours. */
+
+/* The track: a 4px grey line across the whole edge of the page. */
+.bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--color-progress-track);
+  opacity: 0;                      /* invisible unless we're in focus */
+  transition: opacity 300ms ease;
+  pointer-events: none;            /* clicks pass straight through to the page */
+}
+
+.bar.visible {
+  opacity: 1;
+}
+
+/* The filled part. It is always full width, and we "squash" it
+   from the left with scaleX: 0 = empty, 1 = full. content.js sets
+   the squash amount and lets one long CSS transition do the filling. */
+.bar-fill {
+  width: 100%;
+  height: 100%;
+  background: var(--color-progress-fill);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+/* Paused: the bar stays where it is and its fill turns grey-green. */
+.bar.paused .bar-fill {
+  background: var(--color-progress-paused);
+}
+
+/* Small "12:40 remaining" label, shown when the mouse is at the
+   edge the bar is on. It sits just below the bar. */
+.tooltip {
+  position: fixed;
+  top: var(--space-16);
+  left: 0;                         /* content.js moves it under the mouse */
+  transform: translateX(-50%);
+  padding: 10px 14px;
+  border-radius: var(--radius-12);
+  background: var(--color-action-primary);
+  color: var(--color-text-on-action);
+  /* "Touch Grass Sans" is DM Sans from the extension's own fonts
+     folder; content.js loads it under this private name so it can
+     never mix with a font the page itself uses. */
+  font-family: "Touch Grass Sans", var(--font-family);
+  font-optical-sizing: auto;
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--font-caption-line-height);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 150ms ease;
+  pointer-events: none;
+}
+
+.tooltip.visible {
+  opacity: 1;
+}
+
+/* Bar position setting: "bottom" moves the bar and its label to
+   the bottom edge. content.js adds this class to the wrapper. */
+.bar-bottom .bar {
+  top: auto;
+  bottom: 0;
+}
+
+.bar-bottom .tooltip {
+  top: auto;
+  bottom: var(--space-16);
+}
+
+
+/* ---------- The break screen (Figma: "Touch Grass · Meadow break") ----------
+   Built from the components in shared/components.css (.btn, .chip)
+   and the "04 · Meadow interface patterns" frame. Only semantic
+   tokens here, no raw colours. */
+
+.overlay {
+  position: fixed;
+  inset: 0;                        /* cover the whole window */
+  overflow: hidden;
+  background: var(--color-meadow-background); /* shows until the picture has loaded */
+  color: var(--color-text-primary);
+  /* DM Sans from the extension's own fonts folder (see loadFont in
+     content.js), under a private name. */
+  font-family: "Touch Grass Sans", var(--font-family);
+  font-optical-sizing: auto;
+  font-size: var(--font-body-size);
+  line-height: var(--font-body-line-height);
+
+  /* Always show the normal arrow here. Without this line the break
+     screen borrows the cursor from the page underneath, which can be
+     hidden (sites with a custom cursor). Buttons still get the hand. */
+  cursor: default;
+
+  /* Hidden by default. Fades in over about 600 ms (PRD). */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 600ms ease, visibility 0s linear 600ms;
+}
+
+.overlay.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;            /* now it does catch clicks: it covers the page */
+  transition: opacity 600ms ease, visibility 0s;
+}
+
+.overlay:focus {
+  outline: none;                   /* the screen itself is not a control, so no ring */
+}
+
+
+/* ----- The meadow picture (content/meadow.js) ----- */
+
+.meadow-host,
+.meadow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* The 1440 × 900 Figma frame. meadow.js scales it so it covers the
+   window, anchored at the bottom centre. */
+.meadow__scene {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 1440px;
+  height: 900px;
+  transform: translateX(-50%);
+  transform-origin: 50% 100%;
+}
+
+.meadow__base {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1440px;
+  height: 900px;
+}
+
+/* One animated Figma layer: a box of the layer's exact size in
+   Figma. Its motion is in meadow-motion.css. */
+.meadow__layer {
+  position: absolute;
+}
+
+/* A flower group placed in the page as SVG (meadow.js). Each
+   <g data-flower> inside is one Figma flower. A leaning flower may
+   reach past the file's edge, so nothing is cut off. */
+.meadow__svg {
+  overflow: visible;
+}
+
+.meadow__svg [data-flower] {
+  /* Lean and grow around the bottom of the flower's own stem. */
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+/* Only the painted parts of a flower count as "under the cursor"
+   (used by meadow.js to find the flower; the cards on top still get
+   every click). Only while the break screen shows. */
+.overlay.visible .meadow__svg [data-flower] {
+  pointer-events: visiblePainted;
+}
+
+/* A flower under the break sentence is hidden (meadow.js, clearArea),
+   so the quote has plain lawn behind it. It fades out and back in,
+   and can't be hovered while hidden. */
+.meadow__svg [data-flower] {
+  transition: opacity 200ms ease;
+}
+
+.overlay.visible .meadow__svg [data-flower].is-cleared,
+.meadow__svg [data-flower].is-cleared {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* A cat's party hat or bow tie (NOT FROM FIGMA: drawn in code,
+   2026-11-17). It sits inside the cat's body layer, so it moves with
+   the body. Hidden unless the scene's data-accessory names it
+   (meadow.js setAccessory, from the "Cat accessories" setting). */
+.meadow__accessory {
+  position: absolute;
+  display: none;
+}
+
+.meadow__accessory .meadow__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.meadow[data-accessory="party-hat"] .meadow__accessory[data-accessory="party-hat"],
+.meadow[data-accessory="bow-tie"] .meadow__accessory[data-accessory="bow-tie"] {
+  display: block;
+}
+
+/* One whole cat (shadow, tail, body), customizable cats 2026-11-17.
+   A box the size of the frame; for cats 3 and 4 meadow.js mirrors,
+   scales and moves it to their place (transform from its top left
+   corner). --cat-delay starts this cat's Figma loop part-way through,
+   so cats don't move in step (cats 1 and 2: 0, as in Figma). */
+.meadow__cat {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1440px;
+  height: 900px;
+  transform-origin: 0 0;
+}
+
+.meadow__cat [data-layer] {
+  animation-delay: var(--cat-delay, 0s);
+}
+
+/* The extra box around a layer that reacts to the cursor
+   (content/meadow-hover.js plays the reaction on it). Same size
+   and place as the layer inside. */
+.meadow__react {
+  position: absolute;
+}
+
+/* A picture file, placed inside its layer (or straight in the scene
+   for the two shadows under the cats). */
+.meadow__image {
+  position: absolute;
+  display: block;
+  max-width: none;
+}
+
+/* The gouache paper grain over the whole picture: one pixel of grain
+   per screen pixel, as in Figma. */
+.meadow__grain {
+  position: absolute;
+  inset: 0;
+  background: url("../assets/meadow/grain.webp") 0 0 / 256px 256px repeat;
+}
+
+@media (min-resolution: 1.5dppx) {
+  .meadow__grain {
+    background-size: 128px 128px;
+  }
+}
+
+
+/* ----- The cards: four corners, 40px from the edges ----- */
+
+.ui {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-24);
+  padding: 40px;
+  overflow: auto;                  /* a very small window can scroll instead of overlapping */
+}
+
+.ui__top {
+  display: flex;
+  justify-content: space-between;  /* the quote top left, the countdown panel top right */
+  align-items: flex-start;
+  gap: var(--space-24);
+}
+
+/* Bottom: the controls row. */
+.ui__bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-16);
+}
+
+/* Controls: Mute sound on the left, Settings and Full screen on the
+   right (they stay right when the sound button is hidden). */
+.ui__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.view-buttons {
+  display: flex;
+  gap: var(--space-12);
+  margin-left: auto;
+}
+
+/* Mute sound: a 48px round icon button (2026-11-17, user's request).
+   Muted: the waves turn into a cross. The words are for screen
+   readers and the tooltip only. */
+.sound-button {
+  width: 48px;
+  padding: 0;
+}
+
+.sound-button__icon {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sound-button__icon path:nth-child(3),
+.sound-button.is-muted .sound-button__icon path:nth-child(2) {
+  display: none;                   /* waves while playing, a cross while muted */
+}
+
+.sound-button.is-muted .sound-button__icon path:nth-child(3) {
+  display: inline;
+}
+
+.settings-button {
+  min-width: 104px;
+}
+
+.fullscreen-button {
+  min-width: 128px;
+}
+
+/* The white surfaces (Figma: "Welcome readability surface" and the
+   countdown panel). */
+.break-card {
+  flex: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-24); /* 32px in Figma; 24px like the popup cards (2026-11-17) */
+  background: var(--color-surface-raised);
+}
+
+/* Figma: "Break countdown panel", 320 × 304. Compact since
+   2026-11-17 (user's choice): 288px wide, about 220px tall, no
+   "Break ends in" line, the hold time inside the button's label. */
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 288px;
+  padding: 19px 19px 11px;         /* 20px / 12px, minus the 1px border */
+}
+
+/* No line under the button: keep the same space below it as at the top. */
+.panel:has(.panel__hint[hidden]) {
+  padding-bottom: 19px;
+}
+
+.panel__top {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel__round {
+  color: var(--color-text-secondary);
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
+  white-space: nowrap;
+}
+
+.panel__timer {
+  margin-top: var(--space-12);
+  color: var(--color-action-primary);
+  font-size: var(--font-timer-size);
+  line-height: var(--font-timer-line-height);
+  white-space: nowrap;
+}
+
+/* After the break: "Nice break." and what comes next, in place of
+   the countdown (2026-11-17). */
+.panel__done-title {
+  margin-top: var(--space-16);
+  color: var(--color-action-primary);
+  font-size: var(--font-display-size);
+  line-height: var(--font-display-line-height);
+  text-align: center;
+}
+
+.panel__done-next {
+  margin-top: var(--space-4);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.panel__action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+  margin-top: var(--space-12);
+}
+
+.panel__button {
+  width: 100%;
+}
+
+.panel__hint {
+  margin-top: var(--space-8);
+  color: var(--color-text-secondary);
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
+  text-align: center;
+}
+
+/* The sentence for this break (F11) as a quote, top left
+   (2026-11-17, user's request, not in Figma): no background, just
+   dark teal words in curly quotation marks on the meadow, in a
+   narrow italic serif ("Touch Grass Serif" = Instrument Serif
+   Italic, loaded by content.js). The box is at most 150px wide
+   (user's choice), so a sentence takes 2 to 4 lines. Its top edge
+   lines up with the countdown panel's top edge (both sit at the top
+   of .ui__top, 40px from the window's top).
+   The marks are decoration only: the "/ ''" after them keeps screen
+   readers from reading them out. */
+.quote {
+  flex: 0 1 auto;
+  min-width: 0;
+  width: max-content;
+  max-width: 150px;
+}
+
+/* The font leaves 4px of room above its tallest letters in a 36px
+   line, so the text moves up 4px: the top of the first line's
+   letters lines up exactly with the panel's top edge (measured in
+   headless Chrome, 2026-11-17). Below 1024px this is harmless. */
+.quote__text {
+  margin-top: -4px;
+  color: var(--color-action-primary);
+  font-family: "Touch Grass Serif", var(--font-quote-family);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--font-quote-size);
+  line-height: var(--font-quote-line-height);
+  text-align: left;
+  text-wrap: balance;
+  overflow-wrap: break-word;       /* a very long word wraps instead of spilling out */
+  /* A soft glow in the lawn colour around the letters, so a flower or
+     stem behind a word doesn't make it hard to read. On the plain
+     lawn it is invisible (teal on lawn: 5.1:1). */
+  text-shadow:
+    0 0 2px var(--color-meadow-background),
+    0 0 6px var(--color-meadow-background),
+    0 0 12px var(--color-meadow-background);
+  transition: opacity 200ms ease;  /* fading back in after a new sentence */
+}
+
+.quote__text::before {
+  content: "\201C" / "";          /* “ */
+}
+
+.quote__text::after {
+  content: "\201D" / "";          /* ” */
+}
+
+.quote__text.is-swapping {
+  opacity: 0;
+  transition-duration: 150ms;      /* fading out */
+}
+
+
+/* ----- Hold to skip (Figma: "Hold to skip") -----
+   Quiet since 2026-11-17 (user's choice, not Figma): no edge, grey
+   text, so skipping is not the first thing you see. Hover: pale
+   sage. Focus: teal ring (keyboard only).
+   Filling (.is-filling): the lime fill slides in from the left over
+   2 seconds. Complete (.is-complete): all lime, "Break skipped".
+   The edge is drawn inside (box-shadow) so the fill can cover it. */
+
+.hold-skip {
+  position: relative;
+  overflow: hidden;                /* keeps the fill inside the rounded shape */
+  width: 100%;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+  cursor: pointer;
+  user-select: none;               /* holding shouldn't select the text */
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hold-skip:hover,
+.hold-skip.is-filling,
+.hold-skip.is-complete {
+  background: var(--color-surface-hover);
+  color: var(--color-text-primary);  /* dark text on the lime fill too */
+}
+
+.hold-skip:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.hold-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--color-action-highlight);
+  transform: translateX(-100%);    /* empty: waiting just off the left edge */
+  transition: transform 200ms ease; /* quick empty when you let go */
+}
+
+.hold-skip.is-filling .hold-fill {
+  transform: translateX(0);
+  transition: transform var(--hold-ms, 2000ms) linear;
+}
+
+.hold-skip.is-complete .hold-fill {
+  transform: translateX(0);
+  transition: none;
+}
+
+.hold-label {
+  position: relative;              /* keeps the text above the fill */
+}
+
+/* The "Skip break?" question shown to screen-reader users in place
+   of the hold button. */
+.confirm-skip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-8);
+}
+
+.confirm-skip__question {
+  flex: 1 1 100%;                  /* the question takes its own line */
+  font-size: var(--font-body-large-size);
+  line-height: var(--font-body-large-line-height);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+}
+
+.confirm-skip .btn {
+  flex: 1;
+}
+
+
+/* ----- Narrow windows (below 1024px): stack the cards -----
+   The cards sit in one column at the top and the buttons wrap at
+   the bottom. meadow.js then keeps the cats clear of them. */
+
+@media (max-width: 1023px) {
+  .ui {
+    padding: var(--space-24);
+  }
+
+  .ui__top {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-16);
+  }
+
+  /* The quote goes under the centred panel, centred too. */
+  .quote {
+    order: 1;
+  }
+
+  .quote__text {
+    text-align: center;
+  }
+
+  /* The buttons wrap and sit in the middle. */
+  .ui__controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .view-buttons {
+    margin-left: 0;
+  }
+}
+
+
+/* Reduced motion (F10): no fades, no sliding fill on the hold
+   button (its label counts down instead), and the meadow stands
+   still (meadow.js doesn't start any motion). content.js adds this
+   class when the system asks for less motion, or when "Reduced
+   motion: Always on" is chosen in the settings. */
+.reduced-motion .overlay,
+.reduced-motion .overlay.visible,
+.reduced-motion .bar,
+.reduced-motion .tooltip,
+.reduced-motion .hold-fill,
+.reduced-motion .quote__text,
+.reduced-motion .meadow__svg [data-flower] {
+  transition: none;
+}
+
+.reduced-motion .hold-skip.is-filling .hold-fill {
+  transform: translateX(-100%);    /* stays empty */
+}

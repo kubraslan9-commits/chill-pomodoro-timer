@@ -1,0 +1,297 @@
+/* =============================================================
+   THE SETTINGS PAGE'S OWN LAYOUT
+   =============================================================
+   There is no settings-page frame in Figma, so this is a simple
+   layout built from the components in shared/components.css
+   (Card, Number input, Segmented control, Toggle switch,
+   Blocklist row, Button) and the spacing tokens.
+
+   The column is 696px wide: a Card's 24px padding on each side
+   leaves 648px inside, which is exactly the width of a Figma
+   Blocklist row, and of four Number inputs with 24px between them.
+   ============================================================= */
+
+body {
+  background: var(--color-background);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  max-width: calc(696px + 2 * var(--space-24));
+  margin: 0 auto;
+  padding: var(--space-32) var(--space-24) 64px;
+}
+
+
+/* ---------- Page heading ---------- */
+
+.page-header {
+  padding: 0 var(--space-24) var(--space-8);
+}
+
+.page-header__brand {
+  color: var(--color-action-primary);
+  font-size: var(--font-title-size);
+  line-height: var(--font-title-line-height);
+  font-weight: var(--font-weight-medium);
+}
+
+h1 {
+  margin: var(--space-4) 0 0;
+  font-size: var(--font-display-size);
+  line-height: var(--font-display-line-height);
+  font-weight: var(--font-weight-regular);
+}
+
+
+/* ---------- Inside a card ---------- */
+
+/* A card's title and the grey line under it. */
+.card__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+h2 {
+  margin: 0;
+  font-size: var(--font-title-size);
+  line-height: var(--font-title-line-height);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Small grey explanations. 6.2:1 on white (WCAG AA asks for 4.5:1). */
+.hint {
+  color: var(--color-text-secondary);
+}
+
+/* The lime "Test mode is on" note (a small Figma "Card", lime). */
+.note {
+  padding: var(--space-16) var(--space-24);
+  border-radius: var(--radius-20);
+  background: var(--color-action-highlight);
+  color: var(--color-text-primary);
+}
+
+
+/* ---------- Number inputs ---------- */
+
+/* Four across; they wrap onto more lines in a narrow window, or a
+   normal window zoomed far in, so nothing is squeezed or cut off. */
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 144px);
+  align-items: start;
+  gap: var(--space-24);
+}
+
+
+/* ---------- Segmented choices ---------- */
+
+fieldset.choice-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* The small label above the control (same look as a Number input's label). */
+.choice-group legend {
+  margin-bottom: 10px;
+  padding: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-caption-size);
+  line-height: var(--font-caption-line-height);
+}
+
+/* One explanation per option; only the chosen option's is shown.
+   (The 1st line belongs to the 1st option, and so on.) */
+.choice-group__hints {
+  margin-top: var(--space-12);
+  color: var(--color-text-secondary);
+}
+
+.choice-group__hints p {
+  display: none;
+}
+
+.choice-group:has(.segmented__option:nth-child(1) input:checked) .choice-group__hints p:nth-child(1),
+.choice-group:has(.segmented__option:nth-child(2) input:checked) .choice-group__hints p:nth-child(2),
+.choice-group:has(.segmented__option:nth-child(3) input:checked) .choice-group__hints p:nth-child(3) {
+  display: block;
+}
+
+/* A one-line note under a choice group that is always shown. */
+.choice-group__note {
+  margin: var(--space-12) 0 0;
+  color: var(--color-text-secondary);
+}
+
+/* Very narrow windows: a little less text room inside each option. */
+@media (max-width: 480px) {
+  .segmented__option span {
+    font-size: var(--font-caption-size);
+  }
+}
+
+
+/* ---------- Toggle rows (Sounds) ---------- */
+
+/* Text on the left, the switch on the right. */
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  min-height: 48px;
+}
+
+.setting-row__label {
+  display: block;
+  font-size: var(--font-body-large-size);
+  line-height: var(--font-body-large-line-height);
+  cursor: pointer;
+}
+
+
+/* ---------- Volume slider ---------- */
+/* No slider component in Figma yet: the browser's own slider,
+   tinted teal. */
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+  min-height: 48px;
+}
+
+.slider-row .setting-row__label {
+  flex: none;
+}
+
+.slider-row input[type="range"] {
+  flex: 1;
+  min-width: 0;
+  height: 24px;
+  margin: 0;
+  accent-color: var(--color-action-primary);
+  cursor: pointer;
+}
+
+.slider-row input[type="range"]:disabled {
+  cursor: default;
+}
+
+.slider-row input[type="range"]:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: var(--radius-pill);
+}
+
+.slider-row output {
+  width: 3.2em;                    /* room for "100%" so the slider doesn't jump */
+  color: var(--color-text-secondary);
+  text-align: right;
+}
+
+
+/* ---------- Blocklist ---------- */
+
+/* The address field and the Add button, side by side. */
+.add-row {
+  display: flex;
+  gap: var(--space-12);
+}
+
+.add-row .field__input {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-regular);
+}
+
+.add-row .btn {
+  flex: none;
+  min-width: 88px;
+}
+
+.blocklist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;                       /* as in the Figma Blocklist row sheet */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* No empty gap in the card while the list has no rows. */
+.blocklist:empty {
+  display: none;
+}
+
+
+/* ---------- Stats: reset and its confirmation step ---------- */
+
+.confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-16);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-20);
+  background: var(--color-surface);
+}
+
+.confirm p {
+  flex: 1 1 100%;                  /* the question takes its own line */
+}
+
+
+/* ---------- Developer tools (added by dev-tools.js, test mode only) ---------- */
+
+.dev-tools {
+  border: 1px dashed var(--color-border-control);
+}
+
+.dev-tools__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+
+/* ---------- "Saved" confirmation ---------- */
+
+.saved {
+  position: fixed;
+  top: var(--space-16);
+  right: var(--space-16);
+  z-index: 1;
+  padding: var(--space-8) var(--space-16);
+  border-radius: var(--radius-pill);
+  background: var(--color-action-primary);
+  color: var(--color-text-on-action);
+  font-weight: var(--font-weight-medium);
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+}
+
+.saved.visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .saved {
+    transition: none;
+  }
+}
+
+/* Same, when "Reduced motion: Always on" is chosen on this page
+   (options.js adds this class to the body). */
+.reduced-motion .saved {
+  transition: none;
+}

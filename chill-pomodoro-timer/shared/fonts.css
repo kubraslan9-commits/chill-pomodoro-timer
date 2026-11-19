@@ -1,0 +1,42 @@
+/* =============================================================
+   THE FONT: DM Sans
+   =============================================================
+   The font file is bundled inside the extension (fonts/ folder),
+   so nothing is ever downloaded from Google or anywhere else.
+   DM Sans is free to bundle under the SIL Open Font License; the
+   licence text is in fonts/OFL.txt and has to stay next to it.
+
+   One "variable" file holds every weight, so Regular (400) and
+   Medium (500) both come from it.
+
+   This file is for the popup and the settings page. The progress
+   bar on web pages loads the same font file from content.js,
+   because a sealed Shadow DOM box can't declare fonts in CSS.
+   ============================================================= */
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("../fonts/DMSans-Variable.ttf") format("truetype");
+  font-weight: 100 1000;           /* every weight in the file */
+  font-style: normal;
+  font-display: block;             /* it's a local file: wait the instant it takes, no flash of another font */
+}
+
+/* =============================================================
+   THE QUOTE FONT: Instrument Serif Italic (2026-11-17, NOT IN FIGMA YET)
+   =============================================================
+   A narrow, high-contrast italic serif, used only for the break
+   sentence on the meadow. Bundled like DM Sans, free under the SIL
+   Open Font License (licence in fonts/OFL-InstrumentSerif.txt).
+   The break screen loads it from content.js under the private name
+   "Touch Grass Serif"; this rule is here so the popup or settings
+   could use it too.
+   ============================================================= */
+
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("../fonts/InstrumentSerif-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Chill Pomodoro Timer</title>
+  <!-- Order matters: the tokens first, then the font, then the
+       shared components, then this popup's own layout. -->
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="../shared/fonts.css">
+  <link rel="stylesheet" href="../shared/components.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- The toolbar popup (PRD requirement F8).
+       Layout from the Figma frames "Touch Grass · Idle popup" and
+       "Touch Grass · Focusing popup". popup.js fills in the text
+       below from the timer's note. -->
+  <main class="popup">
+
+    <!-- Figma: Popup header -->
+    <header class="popup-header">
+      <h1 class="popup-header__brand">Chill Pomodoro Timer</h1>
+      <!-- Opens the settings page in a new tab -->
+      <a class="btn popup-header__settings" href="../options/options.html" target="_blank">
+        <!-- A simple gear, drawn for this app (no icon library). -->
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19.0 10.3 L21.7 10.6 L21.7 13.4 L19.0 13.7 L18.2 15.7 L19.8 17.9 L17.9 19.8 L15.7 18.2 L13.7 19.0 L13.4 21.7 L10.6 21.7 L10.3 19.0 L8.3 18.2 L6.1 19.8 L4.2 17.9 L5.8 15.7 L5.0 13.7 L2.3 13.4 L2.3 10.6 L5.0 10.3 L5.8 8.3 L4.2 6.1 L6.1 4.2 L8.3 5.8 L10.3 5.0 L10.6 2.3 L13.4 2.3 L13.7 5.0 L15.7 5.8 L17.9 4.2 L19.8 6.1 L18.2 8.3Z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        Settings
+      </a>
+    </header>
+
+    <!-- Figma: Popup timer card -->
+    <section class="timer-card" aria-label="Timer">
+      <div class="timer-card__top">
+        <!-- Figma: Phase chip. popup.js swaps the colour class and the word. -->
+        <p id="phase" class="chip chip--idle">
+          <span class="chip__dot" aria-hidden="true"></span>
+          <span id="phase-label">Idle</span>
+        </p>
+        <p id="round" class="timer-card__round">Round 1 of 4</p>
+      </div>
+
+      <p id="time" class="timer-card__time" role="timer">--:--</p>
+      <p id="message" class="timer-card__message"></p>
+
+      <div class="timer-card__actions">
+        <!-- One main button that changes its label: Start focus / Pause / Resume -->
+        <button id="main-button" class="btn btn--highlight timer-card__main" type="button">Start focus</button>
+
+        <!-- Mutes the ambient break sound (F13). Only shown during a
+             break with ambient sound on, where it takes the place of
+             the main button (a break can't be paused anyway). So
+             there is always a visible way to silence the sound, even
+             when the break screen can't appear. -->
+        <button id="mute-button" class="btn btn--highlight timer-card__main" type="button" hidden>Mute break sound</button>
+
+        <!-- Shown during a Gentle or Strict break, in place of the
+             main button. popup.js sets the words. -->
+        <p id="break-hint" class="timer-card__hint" hidden></p>
+
+        <!-- A quiet text button, so it is not mistaken for the main one.
+             Hidden while idle (there is nothing to reset). During a
+             focus round it asks first (the row below). -->
+        <button id="reset-button" class="btn btn--quiet timer-card__reset" type="button">Reset</button>
+      </div>
+
+      <!-- "Reset round?" Takes the place of the buttons above while it
+           shows, so the popup does not get taller. popup.js shows it. -->
+      <div id="reset-confirm" class="timer-card__actions timer-card__confirm"
+           role="group" aria-labelledby="reset-confirm-label" hidden>
+        <p id="reset-confirm-label" class="timer-card__confirm-label">Reset round?</p>
+        <button id="reset-cancel" class="btn btn--secondary" type="button">Cancel</button>
+        <button id="reset-yes" class="btn btn--primary" type="button">Reset</button>
+      </div>
+    </section>
+
+    <!-- Opens and closes the stats below (progressive disclosure,
+         2026-11-17). Its words are a short summary of today, so it
+         is useful even while closed. popup.js fills them in. -->
+    <button id="stats-toggle" class="stats-toggle" type="button"
+            aria-expanded="false" aria-controls="stats">
+      <span id="stats-summary">Today · 0 pomodoros · 0 min</span>
+      <svg class="stats-toggle__chevron" viewBox="0 0 16 16" aria-hidden="true" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6l4 4 4-4"/>
+      </svg>
+    </button>
+
+    <!-- Daily stats (F14). popup.js fills these in. Hidden until the
+         row above is opened. -->
+    <section id="stats" class="stats" aria-label="Stats" hidden>
+
+      <!-- Figma: Popup metric card (two of them, side by side) -->
+      <div class="metric-row">
+        <div class="metric-card">
+          <p class="metric-card__label">Pomodoros today</p>
+          <p class="metric-card__value">
+            <span id="today-pomodoros" class="metric-card__number">0</span>
+          </p>
+        </div>
+
+        <!-- "4 of 5": breaks taken out of all breaks today. (Today's
+             focus minutes are on today's lime day bar below.) -->
+        <div class="metric-card">
+          <p class="metric-card__label">Breaks today</p>
+          <p class="metric-card__value">
+            <span id="today-breaks" class="metric-card__number">0</span>
+            <span id="today-breaks-unit" class="metric-card__unit"></span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Figma: Popup weekly card -->
+      <div class="week-card">
+        <div class="week-card__top">
+          <h2 class="week-card__title">Last 7 days</h2>
+          <!-- Focus minutes over the last 7 days -->
+          <p id="week-total" class="week-card__total">0 min</p>
+        </div>
+
+        <!-- Figma: Day bar (04 · Day bars). One bar per day, today last
+             and lime. popup.js draws them. -->
+        <ol id="week-strip" class="week-card__days" aria-label="Focus minutes in the last 7 days"></ol>
+      </div>
+    </section>
+  </main>
+
+  <script src="../shared/settings.js"></script>
+  <script src="../shared/stats.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

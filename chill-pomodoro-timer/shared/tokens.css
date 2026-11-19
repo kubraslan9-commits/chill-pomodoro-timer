@@ -1,0 +1,169 @@
+/* =============================================================
+   DESIGN TOKENS
+   =============================================================
+   Every colour, space, corner radius and text size used by the
+   popup, the settings page and the on-page progress bar.
+
+   They come from the Figma file "Pomodro-App", from its three
+   variable collections:
+     01 · Primitives  ->  --primitive-…   (the raw colours)
+     02 · Semantic    ->  --color-…       (what a colour is FOR)
+     03 · Scale       ->  --space-…, --radius-…, --font-…
+
+   The rule: components only use the semantic names (--color-…),
+   never a --primitive-… and never a raw #hex value. To change a
+   colour everywhere, change it here.
+
+   `:root` covers normal pages (popup, settings). `:host` covers
+   the sealed box (Shadow DOM) that the progress bar lives in on
+   web pages.
+   ============================================================= */
+
+:root,
+:host {
+  /* ---------- 01 · Primitives ---------- */
+  --primitive-sage-100: #e9ede6;
+  --primitive-sage-200: #b6c0b2;
+  --primitive-sage-300: #c6cfc1;
+  --primitive-sage-600: #536657;
+  --primitive-paper-50: #f8f9f2;
+  --primitive-white: #ffffff;
+  --primitive-lime-300: #e1f579;
+  --primitive-lime-400: #d3eb58;
+  --primitive-grass-500: #78994d;
+  --primitive-teal-800: #234d43;
+  --primitive-navy-900: #172f36;
+  --primitive-poppy-600: #b43f35;
+  --primitive-coral-400: #ee937e;
+  --primitive-peach-200: #f3c9a8;
+  --primitive-pink-200: #eabccb;
+  --primitive-butter-300: #f1d784;
+  /* NOT IN FIGMA YET (popup UI pass, 2026-11-17): soft chip tints. */
+  --primitive-lime-100: #f3fbcc;
+  --primitive-mint-200: #cfe5da;
+
+  /* ---------- 02 · Semantic ---------- */
+  --color-background: var(--primitive-sage-100);
+  --color-surface: var(--primitive-paper-50);
+  --color-surface-raised: var(--primitive-white);
+
+  --color-text-primary: var(--primitive-navy-900);
+  --color-text-secondary: var(--primitive-sage-600);
+  --color-text-on-action: var(--primitive-paper-50);
+
+  --color-action-primary: var(--primitive-teal-800);
+  --color-action-hover: var(--primitive-navy-900);
+  --color-action-highlight: var(--primitive-lime-300);
+  --color-action-highlight-hover: var(--primitive-lime-400);
+
+  --color-border: var(--primitive-sage-300);
+  --color-focus: var(--primitive-teal-800);
+  --color-error: var(--primitive-poppy-600);
+
+  --color-progress-track: var(--primitive-sage-300);
+  --color-progress-fill: var(--primitive-teal-800);
+  --color-progress-paused: var(--primitive-sage-600);
+
+  --color-disabled-background: var(--primitive-sage-100);
+  --color-disabled-text: var(--primitive-sage-600);
+
+  /* ---------- Semantic, NOT IN FIGMA YET ----------
+     In the Figma file these places use a primitive directly (or
+     a faint border). They get their own names here so components
+     can stay "semantic only". Add them to the "02 · Semantic"
+     collection in Figma to keep both sides in step. */
+
+  /* Edges of things you can type in or switch: 6.2:1 on white.
+     (--color-border is 1.6:1, too faint for a control; it is
+     still used for card edges, which are decoration.) */
+  --color-border-control: var(--primitive-sage-600);
+
+  /* Hover tint for white controls: secondary button, blocklist row, "×". */
+  --color-surface-hover: var(--primitive-sage-100);
+
+  /* The groove of the toggle (when off) and of the segmented control. */
+  --color-control-track: var(--primitive-sage-100);
+  --color-control-track-hover: var(--primitive-sage-300);
+
+  /* The knob of a toggle that is off. (Figma: white, which is
+     1.2:1 on the groove and hard to see.) */
+  --color-control-thumb-off: var(--primitive-sage-600);
+
+  /* The pill behind each day in the popup's weekly card. Figma
+     "Day bar" (State=Default) uses sage/100, but the card behind it
+     is sage/100 now, so the pills are white (2026-11-17). Today's
+     pill uses --color-action-highlight, as in Figma. */
+  --color-day-bar: var(--primitive-white);
+
+  /* The popup's stats cards (metric cards, last 7 days): a tint
+     strong enough to show without a border. Grey text on it: 5:1. */
+  --color-surface-muted: var(--primitive-sage-100);
+
+  /* Phase chip backgrounds. All soft tints with dark text, so the
+     chip never competes with the main button or the time.
+     (Until 2026-11-17 Focus was solid lime and Break solid teal.) */
+  --color-phase-idle: var(--primitive-sage-100);
+  --color-phase-focus: var(--primitive-lime-100);
+  --color-phase-break: var(--primitive-mint-200);
+  --color-phase-long-break: var(--primitive-butter-300);
+  --color-phase-paused: var(--primitive-peach-200);
+
+  /* The lawn behind the meadow picture: shows while the picture
+     loads, and in any gap above it. Sampled from "Meadow ground". */
+  --primitive-meadow-lawn: #a4cc60;
+  --color-meadow-background: var(--primitive-meadow-lawn);
+
+  /* ---------- 03 · Scale: spacing ---------- */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+
+  /* ---------- 03 · Scale: corner radius ---------- */
+  --radius-0: 0px;
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-20: 20px;
+  --radius-24: 24px;   /* NOT IN FIGMA YET: popup cards and container (2026-11-17) */
+  --radius-32: 32px;
+  --radius-pill: 999px;
+
+  /* ---------- 03 · Scale: type ---------- */
+  /* The font file is bundled with the extension (see fonts.css).
+     The names after "DM Sans" are only a safety net. */
+  --font-family: "DM Sans", ui-rounded, system-ui, sans-serif;
+
+  /* NOT IN FIGMA YET (2026-11-17): the serif for the break sentence
+     (a quote on the meadow), with its size. */
+  --font-quote-family: "Instrument Serif", Georgia, serif;
+  --font-quote-size: 32px;
+  --font-quote-line-height: 36px;
+
+  --font-caption-size: 12px;
+  --font-caption-line-height: 16px;
+  --font-body-size: 14px;
+  --font-body-line-height: 20px;
+  --font-body-large-size: 16px;
+  --font-body-large-line-height: 24px;
+  --font-title-size: 20px;
+  --font-title-line-height: 28px;
+  --font-display-size: 32px;
+  --font-display-line-height: 36px;
+  --font-timer-size: 64px;
+  --font-timer-line-height: 72px;
+
+  /* NOT IN FIGMA YET (compact popup, 2026-11-17): two in-between
+     sizes, so the popup can be smaller without breaking the scale. */
+  --font-headline-size: 24px;          /* popup metric numbers */
+  --font-headline-line-height: 32px;
+  --font-timer-compact-size: 56px;     /* popup time */
+  --font-timer-compact-line-height: 64px;
+
+  /* The two weights the text styles use (Regular and Medium).
+     These come from the Figma text styles, not from a variable. */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+}

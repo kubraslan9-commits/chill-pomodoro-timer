@@ -1,0 +1,735 @@
+/* =============================================================
+   MEADOW MOTION  (PRD F5)
+   =============================================================
+   The keyframe animation of the Figma frame "Touch Grass · Meadow
+   break" (node 9:148), translated to plain CSS. Nothing in here is
+   invented: every percentage, value and easing comes from Figma.
+
+   - All 31 animated layers share ONE 16 second loop and start
+     together. Figma eases in and out between every two keyframes,
+     so the easing is written inside each keyframe and the
+     animation itself is "linear".
+   - Only rotate, translate and scale are animated (all three are
+     transform properties, so nothing on the page is laid out again).
+     Figma's order is: move, then turn, then stretch. That is also
+     the order the browser applies these three properties in.
+   - Figma gives rotation in radians; here it is in degrees.
+   - transform-origin is the point each layer turns around, as a
+     percentage of the layer's own box in Figma.
+   - Layers whose animation is identical in Figma share one
+     @keyframes rule (listed above it).
+
+   meadow.js puts the class "meadow--running" on the scene during a
+   break and "meadow--paused" while the tab is hidden.
+   ============================================================= */
+
+/* ----- Switching the motion on, off and to pause ----- */
+
+.meadow [data-layer] {
+  animation-duration: 16s;
+  animation-timing-function: linear;   /* the easing is per keyframe, below */
+  animation-iteration-count: infinite;
+}
+
+/* Not in a break, or reduced motion: no animation at all. Every
+   layer then sits exactly where it is drawn in Figma. */
+.meadow:not(.meadow--running) [data-layer] {
+  animation-name: none;
+}
+
+/* Lets the browser move each picture without redrawing it. */
+.meadow--running [data-layer] {
+  will-change: transform;
+}
+
+/* Hidden tab: freeze everything where it is, carry on afterwards. */
+.meadow--paused [data-layer] {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meadow [data-layer] {
+    animation-name: none !important;
+  }
+}
+
+
+/* ----- One rule per Figma layer ----- */
+
+/* Flowers west · poppies (9:826) */
+.meadow [data-layer="flowers-west-poppies"] {
+  transform-origin: 50% 100%;
+  animation-name: flowers-west-poppies-rotate;
+}
+
+/* Flowers west · poppies (20:10083) */
+.meadow [data-layer="flowers-west-poppies-2"] {
+  transform-origin: 50% 100%;
+  animation-name: flowers-west-poppies-rotate;
+}
+
+/* Flowers north · bells (9:1067) */
+.meadow [data-layer="flowers-north-bells"] {
+  transform-origin: 50% 100%;
+  animation-name: flowers-north-bells-rotate;
+}
+
+/* Flowers east · daisies (9:1229) */
+.meadow [data-layer="flowers-east-daisies"] {
+  transform-origin: 50% 100%;
+  animation-name: flowers-east-daisies-rotate;
+}
+
+/* Flowers southwest · cosmos (9:1470) */
+.meadow [data-layer="flowers-southwest-cosmos"] {
+  transform-origin: 50% 100%;
+  animation-name: flowers-southwest-cosmos-rotate;
+}
+
+/* Flowers foreground · roses (9:1663) */
+.meadow [data-layer="flowers-foreground-roses"] {
+  transform-origin: 50% 100%;
+  animation-name: flowers-foreground-roses-rotate;
+}
+
+/* Flowers foreground · poppies (9:1904) */
+.meadow [data-layer="flowers-foreground-poppies"] {
+  transform-origin: 50% 100%;
+  animation-name: flowers-foreground-poppies-rotate;
+}
+
+/* Flowers southeast · wildflowers (9:2125) */
+.meadow [data-layer="flowers-southeast-wildflowers"] {
+  transform-origin: 50% 100%;
+  animation-name: flowers-southeast-wildflowers-rotate;
+}
+
+/* Flowers east · tall tulips (9:2366) */
+.meadow [data-layer="flowers-east-tall-tulips"] {
+  transform-origin: 50% 100%;
+  animation-name: flowers-east-tall-tulips-rotate;
+}
+
+/* Foreground grasses (9:2394) */
+.meadow [data-layer="foreground-grasses"] {
+  transform-origin: 50% 100%;
+  animation-name: foreground-grasses-rotate;
+}
+
+/* Ginger cat tail (9:2636) */
+.meadow [data-layer="ginger-cat-tail"] {
+  transform-origin: 71.71% 9.64%;
+  animation-name: ginger-cat-tail-rotate;
+}
+
+/* Ginger cat body (9:2638) */
+.meadow [data-layer="ginger-cat-body"] {
+  transform-origin: 50% 100%;
+  animation-name: ginger-cat-body-rotate, ginger-cat-body-scale;
+}
+
+/* Navy cat tail (9:2647) */
+.meadow [data-layer="navy-cat-tail"] {
+  transform-origin: 13.79% 11.08%;
+  animation-name: navy-cat-tail-rotate;
+}
+
+/* Navy cat body (9:2649) */
+.meadow [data-layer="navy-cat-body"] {
+  transform-origin: 50% 100%;
+  animation-name: navy-cat-body-rotate, ginger-cat-body-scale;
+}
+
+/* Bird ivory (9:2657) */
+.meadow [data-layer="bird-ivory"] {
+  transform-origin: 50% 50%;
+  animation-name: bird-ivory-rotate, bird-ivory-translate;
+}
+
+/* Bird ivory wings (9:2658) */
+.meadow [data-layer="bird-ivory-wings"] {
+  transform-origin: 50% 90%;
+  animation-name: bird-ivory-wings-scale;
+}
+
+/* Bird blue (9:2664) */
+.meadow [data-layer="bird-blue"] {
+  transform-origin: 50% 50%;
+  animation-name: bird-blue-rotate, bird-blue-translate;
+}
+
+/* Bird blue wings (9:2665) */
+.meadow [data-layer="bird-blue-wings"] {
+  transform-origin: 50% 90%;
+  animation-name: bird-ivory-wings-scale;
+}
+
+/* Bird butter (9:2671) */
+.meadow [data-layer="bird-butter"] {
+  transform-origin: 50% 50%;
+  animation-name: bird-butter-rotate, bird-butter-translate;
+}
+
+/* Bird butter wings (9:2672) */
+.meadow [data-layer="bird-butter-wings"] {
+  transform-origin: 50% 90%;
+  animation-name: bird-ivory-wings-scale;
+}
+
+/* Bird pale (9:2678) */
+.meadow [data-layer="bird-pale"] {
+  transform-origin: 50% 50%;
+  animation-name: bird-pale-rotate, bird-pale-translate;
+}
+
+/* Bird pale wings (9:2679) */
+.meadow [data-layer="bird-pale-wings"] {
+  transform-origin: 50% 90%;
+  animation-name: bird-ivory-wings-scale;
+}
+
+/* Meadow flowers · middle left (11:5503) */
+.meadow [data-layer="meadow-flowers-middle-left"] {
+  transform-origin: 50% 100%;
+  animation-name: meadow-flowers-middle-left-rotate;
+}
+
+/* Meadow flowers · far drift (11:6229) */
+.meadow [data-layer="meadow-flowers-far-drift"] {
+  transform-origin: 50% 100%;
+  animation-name: meadow-flowers-far-drift-rotate;
+}
+
+/* Meadow flowers · lower centre (11:7316) */
+.meadow [data-layer="meadow-flowers-lower-centre"] {
+  transform-origin: 50% 100%;
+  animation-name: meadow-flowers-middle-left-rotate;
+}
+
+/* Meadow flowers · low clover (11:8390) */
+.meadow [data-layer="meadow-flowers-low-clover"] {
+  transform-origin: 50% 100%;
+  animation-name: meadow-flowers-far-drift-rotate;
+}
+
+/* Low blooms · upper clearing (11:9143) */
+.meadow [data-layer="low-blooms-upper-clearing"] {
+  transform-origin: 50% 100%;
+  animation-name: low-blooms-upper-clearing-rotate;
+}
+
+/* Low blooms · left clearing (11:10697) */
+.meadow [data-layer="low-blooms-left-clearing"] {
+  transform-origin: 50% 100%;
+  animation-name: low-blooms-left-clearing-rotate;
+}
+
+/* Low blooms · central meadow (11:18620) */
+.meadow [data-layer="low-blooms-central-meadow"] {
+  transform-origin: 50% 100%;
+  animation-name: low-blooms-upper-clearing-rotate;
+}
+
+/* Low blooms · foreground clearing (11:23239) */
+.meadow [data-layer="low-blooms-foreground-clearing"] {
+  transform-origin: 50% 100%;
+  animation-name: low-blooms-left-clearing-rotate;
+}
+
+/* Low blooms · right clearing (11:24421) */
+.meadow [data-layer="low-blooms-right-clearing"] {
+  transform-origin: 50% 100%;
+  animation-name: low-blooms-upper-clearing-rotate;
+}
+
+
+/* ----- The keyframes ----- */
+
+/* Used by: Flowers west · poppies (9:826),
+   Flowers west · poppies (20:10083) */
+@keyframes flowers-west-poppies-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: -0.2487deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -0.4596deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: -0.6005deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: -0.65deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: -0.6005deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: -0.4596deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: -0.2487deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 0.2487deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 0.4596deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 0.6005deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 0.65deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 0.6005deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 0.4596deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 0.2487deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Flowers north · bells (9:1067) */
+@keyframes flowers-north-bells-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: -0.4368deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -0.4194deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: 0.0419deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: 0.6769deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: 1.1137deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 1.0963deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: 0.635deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: -0.4368deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: -0.4194deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 0.0419deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 0.6769deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 1.1137deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 1.0963deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 0.635deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Flowers east · daisies (9:1229) */
+@keyframes flowers-east-daisies-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: -0.2007deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -0.2564deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: -0.1585deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: 0.078deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: 0.4171deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 0.8072deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: 1.1889deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 1.5042deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 1.7049deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 1.7606deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 1.6627deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 1.4262deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 1.0871deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 0.6969deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 0.3152deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Flowers southwest · cosmos (9:1470) */
+@keyframes flowers-southwest-cosmos-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: 0.0407deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: 0.4201deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: 0.9159deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: 1.2377deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: 1.197deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 0.8177deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: 0.3218deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 0.0407deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 0.4201deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 0.9159deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 1.2377deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 1.197deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 0.8177deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 0.3218deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Flowers foreground · roses (9:1663) */
+@keyframes flowers-foreground-roses-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: 0.0974deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: 0.3056deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: 0.5929deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: 0.9155deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: 1.2244deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 1.4724deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: 1.6219deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 1.6501deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 1.5527deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 1.3445deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 1.0572deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 0.7346deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 0.4258deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 0.1777deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 0.0282deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Flowers foreground · poppies (9:1904) */
+@keyframes flowers-foreground-poppies-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: 0.6159deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: 1.3817deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: 1.8489deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: 1.7437deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: 1.1278deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 0.3619deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: -0.1052deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 0.6159deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 1.3817deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 1.8489deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 1.7437deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 1.1278deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 0.3619deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: -0.1052deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Flowers southeast · wildflowers (9:2125) */
+@keyframes flowers-southeast-wildflowers-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: 0.231deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: 0.4845deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: 0.7219deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: 0.9069deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: 1.0116deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 1.0198deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: 0.9304deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0.757deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 0.526deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 0.2725deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 0.0352deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: -0.1499deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: -0.2545deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: -0.2628deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: -0.1734deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Flowers east · tall tulips (9:2366) */
+@keyframes flowers-east-tall-tulips-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: 0.6237deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: 0.9794deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: 0.8587deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: 0.3324deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: -0.2913deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: -0.647deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: -0.5263deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 0.6237deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 0.9794deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 0.8587deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 0.3324deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: -0.2913deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: -0.647deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: -0.5263deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Foreground grasses (9:2394) */
+@keyframes foreground-grasses-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: -0.0842deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -0.1556deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: -0.2032deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: -0.22deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: -0.2032deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: -0.1556deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: -0.0842deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 0.0842deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 0.1556deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 0.2032deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 0.22deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 0.2032deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 0.1556deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 0.0842deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Ginger cat tail (9:2636) */
+@keyframes ginger-cat-tail-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: -2.8284deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -4deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: -2.8284deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: 2.8284deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 4deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: 2.8284deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: -2.8284deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: -4deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: -2.8284deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 2.8284deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 4deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 2.8284deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Ginger cat body (9:2638) */
+@keyframes ginger-cat-body-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: -0.1148deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -0.2121deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: -0.2771deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: -0.3deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: -0.2771deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: -0.2121deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: -0.1148deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 0.1148deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 0.2121deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 0.2771deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 0.3deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 0.2771deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 0.2121deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 0.1148deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Used by: Ginger cat body (9:2638),
+   Navy cat body (9:2649) */
+@keyframes ginger-cat-body-scale {
+  0%     { animation-timing-function: ease-in-out; scale: 1 1; }
+  12.5%  { animation-timing-function: ease-in-out; scale: 1 1.012; }
+  25%    { animation-timing-function: ease-in-out; scale: 1 1; }
+  37.5%  { animation-timing-function: ease-in-out; scale: 1 1.012; }
+  50%    { animation-timing-function: ease-in-out; scale: 1 1; }
+  62.5%  { animation-timing-function: ease-in-out; scale: 1 1.012; }
+  75%    { animation-timing-function: ease-in-out; scale: 1 1; }
+  87.5%  { animation-timing-function: ease-in-out; scale: 1 1.012; }
+  100%   { scale: 1 1; }
+}
+
+/* Navy cat tail (9:2647) */
+@keyframes navy-cat-tail-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: -1.528deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -1.3965deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: 0.3175deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: 2.6098deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: 4.1377deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 4.0062deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: 2.2923deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: -1.528deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: -1.3965deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 0.3175deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 2.6098deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 4.1377deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 4.0062deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 2.2923deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Navy cat body (9:2649) */
+@keyframes navy-cat-body-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: -0.0898deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -0.144deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: -0.1545deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: -0.1195deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: -0.0443deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 0.0594deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: 0.176deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0.2877deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 0.3775deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 0.4317deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 0.4421deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 0.4071deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 0.332deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 0.2283deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 0.1117deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Bird ivory (9:2657) */
+@keyframes bird-ivory-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: -0.7654deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -1.4142deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: -1.8477deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: -2deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: -1.8477deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: -1.4142deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: -0.7654deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 0.7654deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 1.4142deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 1.8477deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 2deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 1.8477deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 1.4142deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 0.7654deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Bird ivory (9:2657) */
+@keyframes bird-ivory-translate {
+  0%     { animation-timing-function: ease-in-out; translate: 0px 0px; }
+  25%    { animation-timing-function: ease-in-out; translate: 13px -9px; }
+  50%    { animation-timing-function: ease-in-out; translate: 25px -2px; }
+  75%    { animation-timing-function: ease-in-out; translate: 11px 7px; }
+  100%   { translate: 0px 0px; }
+}
+
+/* Used by: Bird ivory wings (9:2658),
+   Bird blue wings (9:2665),
+   Bird butter wings (9:2672),
+   Bird pale wings (9:2679) */
+@keyframes bird-ivory-wings-scale {
+  0%     { animation-timing-function: ease-in-out; scale: 1 1; }
+  6.25%  { animation-timing-function: ease-in-out; scale: 1 0.82; }
+  12.5%  { animation-timing-function: ease-in-out; scale: 1 1; }
+  18.75% { animation-timing-function: ease-in-out; scale: 1 0.82; }
+  25%    { animation-timing-function: ease-in-out; scale: 1 1; }
+  31.25% { animation-timing-function: ease-in-out; scale: 1 0.82; }
+  37.5%  { animation-timing-function: ease-in-out; scale: 1 1; }
+  43.75% { animation-timing-function: ease-in-out; scale: 1 0.82; }
+  50%    { animation-timing-function: ease-in-out; scale: 1 1; }
+  56.25% { animation-timing-function: ease-in-out; scale: 1 0.82; }
+  62.5%  { animation-timing-function: ease-in-out; scale: 1 1; }
+  68.75% { animation-timing-function: ease-in-out; scale: 1 0.82; }
+  75%    { animation-timing-function: ease-in-out; scale: 1 1; }
+  81.25% { animation-timing-function: ease-in-out; scale: 1 0.82; }
+  87.5%  { animation-timing-function: ease-in-out; scale: 1 1; }
+  93.75% { animation-timing-function: ease-in-out; scale: 1 0.82; }
+  100%   { scale: 1 1; }
+}
+
+/* Bird blue (9:2664) */
+@keyframes bird-blue-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: -0.7039deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -1.2253deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: -1.4849deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: -1.443deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: -1.1062deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: -0.5256deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: 0.2104deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0.9896deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 1.6935deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 2.2149deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 2.4745deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 2.4326deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 2.0958deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 1.5152deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 0.7792deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Bird blue (9:2664) */
+@keyframes bird-blue-translate {
+  0%     { animation-timing-function: ease-in-out; translate: 0px 0px; }
+  25%    { animation-timing-function: ease-in-out; translate: -15px -10px; }
+  50%    { animation-timing-function: ease-in-out; translate: -27px -2px; }
+  75%    { animation-timing-function: ease-in-out; translate: -12px 8px; }
+  100%   { translate: 0px 0px; }
+}
+
+/* Bird butter (9:2671) */
+@keyframes bird-butter-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: -0.5987deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -0.9602deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: -1.0297deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: -0.7963deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: -0.2958deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 0.3958deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: 1.173deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 1.9177deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 2.5164deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 2.878deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 2.9474deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 2.714deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 2.2135deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 1.5219deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 0.7447deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Bird butter (9:2671) */
+@keyframes bird-butter-translate {
+  0%     { animation-timing-function: ease-in-out; translate: 0px 0px; }
+  25%    { animation-timing-function: ease-in-out; translate: 17px -11px; }
+  50%    { animation-timing-function: ease-in-out; translate: 29px -2px; }
+  75%    { animation-timing-function: ease-in-out; translate: 13px 9px; }
+  100%   { translate: 0px 0px; }
+}
+
+/* Bird pale (9:2678) */
+@keyframes bird-pale-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  6.25%  { animation-timing-function: ease-in-out; rotate: -0.4562deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -0.6355deg; }
+  18.75% { animation-timing-function: ease-in-out; rotate: -0.5104deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: -0.1001deg; }
+  31.25% { animation-timing-function: ease-in-out; rotate: 0.533deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 1.2925deg; }
+  43.75% { animation-timing-function: ease-in-out; rotate: 2.0628deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 2.7265deg; }
+  56.25% { animation-timing-function: ease-in-out; rotate: 3.1828deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 3.362deg; }
+  68.75% { animation-timing-function: ease-in-out; rotate: 3.237deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 2.8266deg; }
+  81.25% { animation-timing-function: ease-in-out; rotate: 2.1936deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 1.4341deg; }
+  93.75% { animation-timing-function: ease-in-out; rotate: 0.6638deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Bird pale (9:2678) */
+@keyframes bird-pale-translate {
+  0%     { animation-timing-function: ease-in-out; translate: 0px 0px; }
+  25%    { animation-timing-function: ease-in-out; translate: -19px -12px; }
+  50%    { animation-timing-function: ease-in-out; translate: -31px -2px; }
+  75%    { animation-timing-function: ease-in-out; translate: -14px 10px; }
+  100%   { translate: 0px 0px; }
+}
+
+/* Used by: Meadow flowers · middle left (11:5503),
+   Meadow flowers · lower centre (11:7316) */
+@keyframes meadow-flowers-middle-left-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -0.42deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 0.42deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: -0.42deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 0.42deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Used by: Meadow flowers · far drift (11:6229),
+   Meadow flowers · low clover (11:8390) */
+@keyframes meadow-flowers-far-drift-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -0.297deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: -0.42deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: -0.297deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 0.297deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 0.42deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 0.297deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Used by: Low blooms · upper clearing (11:9143),
+   Low blooms · central meadow (11:18620),
+   Low blooms · right clearing (11:24421) */
+@keyframes low-blooms-upper-clearing-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -0.3deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: 0.3deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: -0.3deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 0.3deg; }
+  100%   { rotate: 0deg; }
+}
+
+/* Used by: Low blooms · left clearing (11:10697),
+   Low blooms · foreground clearing (11:23239) */
+@keyframes low-blooms-left-clearing-rotate {
+  0%     { animation-timing-function: ease-in-out; rotate: 0deg; }
+  12.5%  { animation-timing-function: ease-in-out; rotate: -0.2121deg; }
+  25%    { animation-timing-function: ease-in-out; rotate: -0.3deg; }
+  37.5%  { animation-timing-function: ease-in-out; rotate: -0.2121deg; }
+  50%    { animation-timing-function: ease-in-out; rotate: 0deg; }
+  62.5%  { animation-timing-function: ease-in-out; rotate: 0.2121deg; }
+  75%    { animation-timing-function: ease-in-out; rotate: 0.3deg; }
+  87.5%  { animation-timing-function: ease-in-out; rotate: 0.2121deg; }
+  100%   { rotate: 0deg; }
+}

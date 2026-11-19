@@ -1,0 +1,104 @@
+/* =============================================================
+   CAT ACCESSORY MOTION  (NOT FROM FIGMA)
+   =============================================================
+   The small extra movement of the cats' party hats and bow ties
+   (options page, "Cat accessories"). The Figma file has no
+   accessories, so these values are the user's own spec
+   (2026-11-17), not Figma keyframes. The Figma loop itself stays
+   in meadow-motion.css, untouched.
+
+   How it stays on the cat: every accessory sits INSIDE its cat's
+   body layer (meadow.js), so the Figma sway, the breathing stretch
+   and the hover reaction all carry it along. The rules below only
+   add a tiny turn on top, around the point where it is attached
+   (meadow.js sets transform-origin to the hat's brim or the bow's
+   knot), so it can rock but never come loose.
+
+     Party hat   ±2°, 3.6 s     (wrapper .meadow__accessory)
+     Pompom      ±4°, 2.4 s     (around the tip of the hat)
+     Bow tie     ±1.5°, 4.2 s   (wrapper .meadow__accessory)
+
+   None of these durations divide the Figma loop's 16 s, so the
+   accessories drift in and out of step with the body instead of
+   repeating with it. Each cat starts part-way through each
+   cycle, so no two cats move together.
+
+   Same switches as the Figma loop: only during a break
+   (meadow--running), frozen while the tab is hidden
+   (meadow--paused), and no motion at all with reduced motion
+   (meadow.js never adds meadow--running then; the accessories
+   still show, standing still). Only "rotate" is animated.
+   ============================================================= */
+
+.meadow__accessory,
+.meadow__accessory [data-part="pompom"] {
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* Gives each hat / bow its own layer, so its wobble doesn't make the
+   browser repaint the whole cat underneath every frame (measured
+   2026-11-17: with 4 cats in hats this kept Chrome much busier). */
+.meadow--running .meadow__accessory {
+  will-change: rotate;
+}
+
+/* The pompom turns around its own bottom, where it meets the tip. */
+.meadow__accessory [data-part="pompom"] {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.meadow--running .meadow__accessory[data-accessory="party-hat"] {
+  animation-name: accessory-hat-wobble;
+  animation-duration: 3.6s;
+}
+
+.meadow--running .meadow__accessory[data-accessory="party-hat"] [data-part="pompom"] {
+  animation-name: accessory-pompom-bounce;
+  animation-duration: 2.4s;
+}
+
+.meadow--running .meadow__accessory[data-accessory="bow-tie"] {
+  animation-name: accessory-bow-sway;
+  animation-duration: 4.2s;
+}
+
+/* Each cat starts part-way through each cycle (meadow.js setCats
+   sets the delays per cat: cat 2 as before, cats 3 and 4 at random),
+   so the cats never move together. */
+.meadow--running .meadow__accessory {
+  animation-delay: var(--accessory-delay, 0s);
+}
+
+.meadow--running .meadow__accessory [data-part="pompom"] {
+  animation-delay: var(--pompom-delay, 0s);
+}
+
+/* Hidden tab: freeze where they are, carry on afterwards. */
+.meadow--paused .meadow__accessory,
+.meadow--paused .meadow__accessory [data-part="pompom"] {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meadow__accessory,
+  .meadow__accessory [data-part="pompom"] {
+    animation-name: none !important;
+  }
+}
+
+@keyframes accessory-hat-wobble {
+  0%, 100% { rotate: -2deg; }
+  50%      { rotate: 2deg; }
+}
+
+@keyframes accessory-pompom-bounce {
+  0%, 100% { rotate: 4deg; }
+  50%      { rotate: -4deg; }
+}
+
+@keyframes accessory-bow-sway {
+  0%, 100% { rotate: 1.5deg; }
+  50%      { rotate: -1.5deg; }
+}

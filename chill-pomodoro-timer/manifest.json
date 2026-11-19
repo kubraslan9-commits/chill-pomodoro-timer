@@ -1,0 +1,62 @@
+{
+  "manifest_version": 3,
+  "name": "Chill Pomodoro Timer",
+  "version": "0.1.0",
+  "description": "A quiet Pomodoro timer: a thin progress bar while you focus, a meadow when it's time for a break.",
+
+  "minimum_chrome_version": "116",
+
+  "permissions": ["storage", "alarms", "offscreen"],
+
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+
+  "action": {
+    "default_title": "Chill Pomodoro Timer",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["shared/settings.js", "shared/cat-coats.js", "content/meadow-hover.js", "content/meadow.js", "content/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/content.css",
+        "content/meadow-motion.css",
+        "content/meadow-accessories.css",
+        "shared/tokens.css",
+        "shared/components.css",
+        "shared/cat-art.css",
+        "fonts/DMSans-Variable.ttf",
+        "fonts/InstrumentSerif-Italic.ttf",
+        "assets/meadow/*",
+        "assets/meadow/layers/*",
+        "assets/meadow/accessories/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

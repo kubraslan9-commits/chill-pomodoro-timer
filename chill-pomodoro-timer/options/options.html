@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chill Pomodoro Timer settings</title>
+  <!-- Order matters: the tokens first, then the font, then the
+       shared components, then this page's own layout. -->
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="../shared/fonts.css">
+  <link rel="stylesheet" href="../shared/components.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <!-- The settings page (PRD "Settings" table: F2, F4, F6, F15).
+       There is no Save button: options.js saves every change right
+       away and shows the small "Saved" label below.
+
+       Each section is a Figma "Card" (paper). The controls inside
+       are the components from shared/components.css. -->
+
+  <!-- Small confirmation that appears for two seconds after a save. -->
+  <p id="saved" class="saved" role="status" aria-live="polite"></p>
+
+  <main>
+    <header class="page-header">
+      <p class="page-header__brand">Chill Pomodoro Timer</p>
+      <h1>Settings</h1>
+    </header>
+
+    <!-- Only shown while TEST_MODE is on in shared/settings.js -->
+    <p id="test-mode-note" class="note" hidden>
+      Test mode is on: the timer uses 30-second focus rounds and 30-second
+      breaks, and ignores the lengths and rounds below. Turn it off in
+      <code>shared/settings.js</code>.
+    </p>
+
+    <!-- ---------- Timer ---------- -->
+    <section class="card card--paper">
+      <div class="card__head">
+        <h2>Timer</h2>
+        <p class="hint">A new length is used from the next phase, not the one running now.</p>
+      </div>
+
+      <!-- Figma: Number input. Each one has: a label, the input with
+           its unit inside, the allowed range underneath (filled in by
+           options.js) and a place for an error message.
+           aria-describedby makes screen readers read the range and the
+           error with the field; role="alert" reads a new error at once. -->
+      <div class="field-grid">
+        <div class="field">
+          <label class="field__label" for="focusMinutes">Focus length</label>
+          <div class="field__control">
+            <input class="field__input" type="number" id="focusMinutes" step="1" inputmode="numeric" aria-describedby="focusMinutes-unit focusMinutes-error">
+            <span class="field__unit" aria-hidden="true">min</span>
+          </div>
+          <p class="field__helper" id="focusMinutes-unit"><span data-range="focusMinutes"></span> minutes</p>
+          <p class="field__error" id="focusMinutes-error" role="alert" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="shortBreakMinutes">Short break</label>
+          <div class="field__control">
+            <input class="field__input" type="number" id="shortBreakMinutes" step="1" inputmode="numeric" aria-describedby="shortBreakMinutes-unit shortBreakMinutes-error">
+            <span class="field__unit" aria-hidden="true">min</span>
+          </div>
+          <p class="field__helper" id="shortBreakMinutes-unit"><span data-range="shortBreakMinutes"></span> minutes</p>
+          <p class="field__error" id="shortBreakMinutes-error" role="alert" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="longBreakMinutes">Long break</label>
+          <div class="field__control">
+            <input class="field__input" type="number" id="longBreakMinutes" step="1" inputmode="numeric" aria-describedby="longBreakMinutes-unit longBreakMinutes-error">
+            <span class="field__unit" aria-hidden="true">min</span>
+          </div>
+          <p class="field__helper" id="longBreakMinutes-unit"><span data-range="longBreakMinutes"></span> minutes</p>
+          <p class="field__error" id="longBreakMinutes-error" role="alert" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="rounds">Rounds before long break</label>
+          <div class="field__control">
+            <input class="field__input" type="number" id="rounds" step="1" inputmode="numeric" aria-describedby="rounds-unit rounds-error">
+            <span class="field__unit" aria-hidden="true">rounds</span>
+          </div>
+          <p class="field__helper" id="rounds-unit"><span data-range="rounds"></span> rounds</p>
+          <p class="field__error" id="rounds-error" role="alert" hidden></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Breaks ---------- -->
+    <section class="card card--paper">
+      <div class="card__head">
+        <h2>Breaks</h2>
+      </div>
+
+      <!-- Figma: Segmented control. Real radio buttons underneath.
+           The line below the control explains the chosen option
+           (options.css shows the right one; no script needed). -->
+      <fieldset class="choice-group">
+        <legend>Break strictness</legend>
+        <div class="segmented">
+          <label class="segmented__option">
+            <input type="radio" name="strictness" value="relaxed" aria-describedby="strictness-relaxed-hint">
+            <span>Relaxed</span>
+          </label>
+          <label class="segmented__option">
+            <input type="radio" name="strictness" value="gentle" aria-describedby="strictness-gentle-hint">
+            <span>Gentle friction</span>
+          </label>
+          <label class="segmented__option">
+            <input type="radio" name="strictness" value="strict" aria-describedby="strictness-strict-hint">
+            <span>Strict</span>
+          </label>
+        </div>
+        <div class="choice-group__hints">
+          <p id="strictness-relaxed-hint">A small “Skip break” link.</p>
+          <p id="strictness-gentle-hint">Hold a button for 2 seconds to skip.</p>
+          <p id="strictness-strict-hint">No skip until the countdown ends.</p>
+        </div>
+      </fieldset>
+    </section>
+
+    <!-- ---------- Sounds ---------- -->
+    <section class="card card--paper">
+      <div class="card__head">
+        <h2>Sounds</h2>
+      </div>
+
+      <!-- Figma: Toggle switch. A real checkbox, announced as a switch. -->
+      <div class="setting-row">
+        <div class="setting-row__text">
+          <label class="setting-row__label" for="chimeOn">Transition chime</label>
+          <p class="hint" id="chimeOn-hint">A soft sound when focus or a break ends.</p>
+        </div>
+        <input class="toggle" type="checkbox" role="switch" id="chimeOn" aria-describedby="chimeOn-hint">
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-row__text">
+          <label class="setting-row__label" for="ambientOn">Break ambient sound</label>
+          <p class="hint" id="ambientOn-hint">Plays quietly during breaks.</p>
+        </div>
+        <input class="toggle" type="checkbox" role="switch" id="ambientOn" aria-describedby="ambientOn-hint">
+      </div>
+
+      <div class="slider-row">
+        <label class="setting-row__label" for="ambientVolume">Ambient volume</label>
+        <input type="range" id="ambientVolume" min="0" max="100" step="5">
+        <!-- aria-live="off": the slider itself already says its value -->
+        <output id="ambientVolume-value" for="ambientVolume" aria-live="off"></output>
+      </div>
+    </section>
+
+    <!-- ---------- Progress bar ---------- -->
+    <section class="card card--paper">
+      <div class="card__head">
+        <h2>Progress bar</h2>
+      </div>
+
+      <fieldset class="choice-group">
+        <legend>Position</legend>
+        <div class="segmented segmented--two">
+          <label class="segmented__option">
+            <input type="radio" name="barPosition" value="top" aria-describedby="barPosition-top-hint">
+            <span>Top</span>
+          </label>
+          <label class="segmented__option">
+            <input type="radio" name="barPosition" value="bottom" aria-describedby="barPosition-bottom-hint">
+            <span>Bottom</span>
+          </label>
+        </div>
+        <div class="choice-group__hints">
+          <p id="barPosition-top-hint">Along the top of the page.</p>
+          <p id="barPosition-bottom-hint">Along the bottom of the page.</p>
+        </div>
+      </fieldset>
+    </section>
+
+    <!-- ---------- Motion (F10) ---------- -->
+    <section class="card card--paper">
+      <div class="card__head">
+        <h2>Motion</h2>
+      </div>
+
+      <fieldset class="choice-group">
+        <legend>Reduced motion</legend>
+        <div class="segmented segmented--two">
+          <label class="segmented__option">
+            <input type="radio" name="reducedMotion" value="system" aria-describedby="reducedMotion-system-hint">
+            <span>Follow my computer</span>
+          </label>
+          <label class="segmented__option">
+            <input type="radio" name="reducedMotion" value="always" aria-describedby="reducedMotion-always-hint">
+            <span>Always on</span>
+          </label>
+        </div>
+        <div class="choice-group__hints">
+          <p id="reducedMotion-system-hint">Use less motion only if the system setting asks for it.</p>
+          <p id="reducedMotion-always-hint">No fades, and the progress bar moves in small steps.</p>
+        </div>
+      </fieldset>
+    </section>
+
+    <!-- ---------- Meadow: cat accessories ----------
+         NOT IN FIGMA YET: the design system has no radio component,
+         so this uses .radio from shared/components.css (built from
+         the existing tokens). Real radio inputs: Tab reaches the
+         group, the arrow keys move between options. Saved under
+         settings.catAccessory; the break screen reads it each time
+         it opens, so a change shows from the next break. -->
+    <section class="card card--paper">
+      <div class="card__head">
+        <h2>Meadow</h2>
+      </div>
+
+      <fieldset class="choice-group">
+        <legend>Cat accessories</legend>
+        <div class="radio-list">
+          <label class="radio">
+            <input class="radio__input" type="radio" name="catAccessory" value="none">
+            <span class="radio__label">None</span>
+          </label>
+          <label class="radio">
+            <input class="radio__input" type="radio" name="catAccessory" value="party-hat">
+            <span class="radio__label">Party hat</span>
+          </label>
+          <label class="radio">
+            <input class="radio__input" type="radio" name="catAccessory" value="bow-tie">
+            <span class="radio__label">Bow tie</span>
+          </label>
+        </div>
+        <p class="choice-group__note">Shows from the next break.</p>
+      </fieldset>
+    </section>
+
+    <!-- ---------- Hidden sites (blocklist) ---------- -->
+    <section class="card card--paper">
+      <div class="card__head">
+        <h2>Hidden on these sites</h2>
+        <p class="hint">
+          The progress bar is hidden on these sites and their subdomains.
+          The break screen still appears there.
+        </p>
+      </div>
+
+      <div>
+        <form id="blocklist-form" class="add-row" novalidate>
+          <label for="blocklist-input" class="visually-hidden">Website address</label>
+          <input class="field__input" type="text" id="blocklist-input" placeholder="meet.google.com"
+                 autocomplete="off" spellcheck="false" aria-describedby="blocklist-error">
+          <button class="btn btn--primary" type="submit">Add</button>
+        </form>
+        <p class="field__error" id="blocklist-error" role="alert" hidden></p>
+      </div>
+
+      <!-- options.js fills this list with Figma "Blocklist row"s -->
+      <ul id="blocklist" class="blocklist"></ul>
+      <p id="blocklist-empty" class="hint">No sites yet.</p>
+    </section>
+
+    <!-- ---------- Stats ---------- -->
+    <section class="card card--paper">
+      <div class="card__head">
+        <h2>Stats</h2>
+        <p class="hint">
+          Your pomodoros, focus minutes and breaks for the last 90 days are
+          kept on this computer only.
+        </p>
+      </div>
+
+      <div>
+        <button class="btn btn--secondary" type="button" id="reset-stats">Reset stats</button>
+
+        <!-- The confirmation step. Hidden until "Reset stats" is clicked. -->
+        <div id="reset-stats-confirm" class="confirm" role="group" aria-labelledby="reset-stats-question" hidden>
+          <p id="reset-stats-question">Delete all stats? This can't be undone.</p>
+          <button class="btn btn--danger" type="button" id="reset-stats-yes">Delete</button>
+          <button class="btn btn--secondary" type="button" id="reset-stats-no">Cancel</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../shared/settings.js"></script>
+  <script src="../shared/stats.js"></script>
+  <script src="options.js"></script>
+
+</body>
+</html>
